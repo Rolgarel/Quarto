@@ -24,15 +24,19 @@ public class FenetreJeu extends JFrame implements ActionListener{
     JButton boutonConfirmer;
     JButton boutonRegles;
     JPanel panneauGlobal;
+    JPanel panneauHaut;
     
     //Images
     Toolkit Tool = Toolkit.getDefaultToolkit();
     Image wallpaper = Tool.getImage("space.png");
     
+    private BufferedImage ImagePreparation;
+    private Graphics ImagePreparationGraphics;
+    
     //variables de jeu
     private int etape = -1;
-    ClickPanel[] pieceA = new ClickPanel[16];
-    ClickPanel[] pieceB = new ClickPanel[16];
+    ClickPanel[] pieceA = new ClickPanel[16]; //pieces au niveau du plateau
+    ClickPanel[] pieceB = new ClickPanel[16]; //pieces au niveau de la zone de selection laterale
 	
 	public FenetreJeu () {
 		
@@ -50,6 +54,8 @@ public class FenetreJeu extends JFrame implements ActionListener{
         this.setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
+        ImagePreparation = new BufferedImage(getSize().width,getSize().height,BufferedImage.TYPE_INT_RGB);
+        ImagePreparationGraphics = ImagePreparation.getGraphics();
         
         
         //Panneau plateau
@@ -60,8 +66,8 @@ public class FenetreJeu extends JFrame implements ActionListener{
 		panneauPlateau.setBackground(Color.blue); //couleur pour mettre en évidence le JPanel
 		//Zone de pieces plateau
 		for (int i = 0; i < 16; i++) {
-            pieceA[i] = new ClickPanel((4+i-5*(i/4))*taillePiece,(1+i-3*(i/4))*taillePiece,taillePiece,true);
-			panneauPlateau.add(pieceA[i]);
+            pieceA[i] = new ClickPanel((4+i-5*(i/4))*taillePiece,(1+i-3*(i/4))*taillePiece,taillePiece);
+            pieceA[i].setImage("test3");
 		}
         panneauPlateau.addMouseListener(new MouseAdapter() {
             @Override 
@@ -71,7 +77,7 @@ public class FenetreJeu extends JFrame implements ActionListener{
         });
         
         //Panneau haut
-        JPanel panneauHaut = new JPanel();
+        panneauHaut = new JPanel();
 		panneauHaut.setBounds(0,0,largeurFenetre,tailleHaut);
 		panneauHaut.setLayout(null);
         panneauHaut.setOpaque(false); //rend  le JPanel invisible en affichant sont contenu
@@ -112,9 +118,8 @@ public class FenetreJeu extends JFrame implements ActionListener{
 		//panneauLat.setBackground(Color.gray); //couleur pour mettre en évidence le JPanel
 		//Zone de pieces laterales
 		for (int i = 0; i < 16; i++) {
-			pieceB[i] = new ClickPanel((taillePiece/2)+(int)(1.5*taillePiece*(i%4)),taillePiece+2*taillePiece*(i/4),taillePiece,true);
+			pieceB[i] = new ClickPanel((taillePiece/2)+(int)(1.5*taillePiece*(i%4)),taillePiece+2*taillePiece*(i/4),taillePiece);
             pieceB[i].setImage("test1");//erreur
-			panneauLat.add(pieceB[i]);
 		}
 		
         
@@ -127,6 +132,7 @@ public class FenetreJeu extends JFrame implements ActionListener{
 		panneauGlobal.add(panneauHaut);
 		panneauGlobal.add(panneauBas);
 		panneauGlobal.add(panneauLat);
+        //JLabel wall = new JLabel(wallpaper);
 		
 		this.add(panneauGlobal);
         
@@ -137,7 +143,10 @@ public class FenetreJeu extends JFrame implements ActionListener{
         //clic sur le bouton règles
         if (e.getSource() == boutonRegles) {
             System.out.println("règles");
-            pieceB[4].isSelected = true;
+            pieceB[4].isSelected = !pieceB[4].isSelected;
+            for (int i = 0; i < pieceA.length; i++) {
+                pieceA[i].setImage("test2");
+            }
         } 
         //clic sur le bouton confirmer
         else if (e.getSource() == boutonConfirmer) {
@@ -167,25 +176,42 @@ public class FenetreJeu extends JFrame implements ActionListener{
         affEtape.setText(s);
     }
     
-    //A finir
-    /*public void paint(Graphics g){
-        panneauGlobal.repaint();
-        if (wallpaper != null) {
-            panneauGlobal.repaint();
-            int x = -1000;
-            int y = -1000;
-            for (int i = 0; i < 16; i++) {
-                if (pieceA[i].isSelected == true) {
-                    x = pieceA[i].getPositionX() - 5;
-                    y = pieceA[i].getPositionY() + tailleHaut - 5;
-                }
-                if (pieceB[i].isSelected == true) {
-                    x = pieceB[i].getPositionX() + taillePlateau - 5;
-                    y = pieceB[i].getPositionY() + tailleHaut - 5;
-                }
+    public void paint(Graphics g){
+    
+    panneauHaut.repaint(); //doit etre zone de commande
+    
+    this.requestFocusInWindow();
+    
+    if (pieceB[15] != null) {
+        
+        ImagePreparationGraphics.drawImage(wallpaper,0,0,this);
+        
+        for (int i = 0; i < pieceA.length; i++) {
+            ImagePreparationGraphics.setColor(Color.gray);
+            ImagePreparationGraphics.fillRect(pieceA[i].positionX,tailleHaut + pieceA[i].positionY,taillePiece, taillePiece);
+            if (pieceA[i].image != null) {
+                ImagePreparationGraphics.drawImage(pieceA[i].image,pieceA[i].positionX,tailleHaut + pieceA[i].positionY,this);
             }
-            g.setColor(Color.orange);
-            g.fillRect(0,0,taillePiece,taillePiece);
+            if (pieceA[i].isSelected == true) {
+                ImagePreparationGraphics.setColor(Color.green);
+                ImagePreparationGraphics.drawRect(pieceA[i].positionX,tailleHaut + pieceA[i].positionY,taillePiece, taillePiece);
+            }
         }
-    }*/
+        for (int i = 0; i < pieceB.length; i++) {
+            ImagePreparationGraphics.setColor(Color.gray);
+            ImagePreparationGraphics.fillRect(taillePlateau + pieceB[i].positionX, tailleHaut + pieceB[i].positionY, taillePiece, taillePiece);
+            if (pieceB[i].image != null) {
+                ImagePreparationGraphics.drawImage(pieceB[i].image,taillePlateau + pieceB[i].positionX, tailleHaut + pieceB[i].positionY,this);
+            }
+            if (pieceB[i].isSelected == true) {
+                ImagePreparationGraphics.setColor(Color.green);
+                ImagePreparationGraphics.drawRect(taillePlateau + pieceB[i].positionX, tailleHaut + pieceB[i].positionY, taillePiece, taillePiece);
+            }
+        }
+        
+        //ImagePreparationGraphics.drawImage(Explosion,50,50,this);
+        
+        g.drawImage(ImagePreparation,0,0,this);
+        }
+    }
 }
