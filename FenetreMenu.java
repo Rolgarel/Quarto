@@ -123,10 +123,12 @@ public class FenetreMenu extends JFrame implements ActionListener{
 			FenetreRegles regles = new FenetreRegles();
 		}
 		if(e.getSource() == bHumain){
-			//affichage fenêtre de jeu mode humain VS humain
+			FenetreJeu JeuHumain = new FenetreJeu();
+			dispose();
 		}
 		if(e.getSource() == bOrdi){
-			//affichage fenêtre de jeu mode humain VS ordi;
+			FenetreJeu JeuOrdi = new FenetreJeu();
+			dispose();
 		}
 	 }
 	 

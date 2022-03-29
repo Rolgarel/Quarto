@@ -1,4 +1,3 @@
-
 import java.awt.*;
 import javax.swing.*;
 import java.awt.Color;
@@ -6,6 +5,7 @@ import java.awt.event.*;
 import java.io.*;
 import java.awt.geom.*;
 import java.awt.image.*;
+import javax.imageio.ImageIO;
 
 import javax.swing.UIManager;
 
@@ -21,18 +21,28 @@ public class FenetreJeu extends JFrame implements ActionListener{
     
     //éléments graphiques
     JLabel affEtape;
-    JButton boutonConfirmer;
+    public JButton boutonConfirmer;
     JButton boutonRegles;
     JPanel panneauGlobal;
+    
     
     //Images
     Toolkit Tool = Toolkit.getDefaultToolkit();
     Image wallpaper = Tool.getImage("space.png");
+    String[] imgPieces = new String[16]; 
     
     //variables de jeu
     private int etape = -1;
     ClickPanel[] pieceA = new ClickPanel[16];
     ClickPanel[] pieceB = new ClickPanel[16];
+    int[] position =  new int[2];
+    static boolean isBoutonConfirme = false;
+    static int[] coordClick = new int[2];
+    
+    
+    public static boolean isBoutonConfirme(){
+		return isBoutonConfirme;
+	}
 	
 	public FenetreJeu () {
 		
@@ -48,7 +58,35 @@ public class FenetreJeu extends JFrame implements ActionListener{
 		
         setLayout(null);
         this.setResizable(false);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        addWindowListener(new WindowAdapter(){
+			public void windowClosing(WindowEvent e){
+				FenetreMenu menu = new FenetreMenu();
+				menu.setVisible(true);
+				setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+			}
+		});
+        
+        // Initialisation des images des pièces
+        imgPieces[0] = "grac.png";
+        imgPieces[1] = "grbc.png";
+        imgPieces[2] = "grap.png";
+        imgPieces[3] = "grbp.png";
+        
+        imgPieces[4] = "gcac.png";
+        imgPieces[5] = "gcbc.png";
+        imgPieces[6] = "gcap.png";
+        imgPieces[7] = "gcbp.png";
+        
+        imgPieces[8] = "prac.png";
+        imgPieces[9] = "prbc.png";
+        imgPieces[10] = "prap.png";
+        imgPieces[11] = "prbp.png";
+        
+        imgPieces[12] = "pcac.png";
+        imgPieces[13] = "pcbc.png";
+        imgPieces[14] = "pcap.png";
+        imgPieces[15] = "pcbp.png";
         
         
         
@@ -61,14 +99,14 @@ public class FenetreJeu extends JFrame implements ActionListener{
 		//Zone de pieces plateau
 		for (int i = 0; i < 16; i++) {
             pieceA[i] = new ClickPanel((4+i-5*(i/4))*taillePiece,(1+i-3*(i/4))*taillePiece,taillePiece,true);
+            pieceA[i].addMouseListener(new MouseAdapter() {
+				@Override 
+				public void mousePressed(MouseEvent e) {
+					System.out.println(e.getX() + "," + e.getY());
+				}
+			});
 			panneauPlateau.add(pieceA[i]);
 		}
-        panneauPlateau.addMouseListener(new MouseAdapter() {
-            @Override 
-            public void mousePressed(MouseEvent e) {
-            System.out.println(e.getX() + "," + e.getY());
-            }
-        });
         
         //Panneau haut
         JPanel panneauHaut = new JPanel();
@@ -113,9 +151,19 @@ public class FenetreJeu extends JFrame implements ActionListener{
 		//Zone de pieces laterales
 		for (int i = 0; i < 16; i++) {
 			pieceB[i] = new ClickPanel((taillePiece/2)+(int)(1.5*taillePiece*(i%4)),taillePiece+2*taillePiece*(i/4),taillePiece,true);
-            pieceB[i].setImage("test1");//erreur
+            pieceB[i].setImage(imgPieces[i]);//erreur
 			panneauLat.add(pieceB[i]);
 		}
+		panneauLat.addMouseListener(new MouseAdapter() {
+				@Override 
+				public void mousePressed(MouseEvent e) {
+					coordClick[0] = e.getX();
+					coordClick[1] = e.getY();
+					System.out.println(e.getX() + "," + e.getY());
+				}
+			}
+		);
+		
 		
         
         //Panneau global
@@ -133,7 +181,10 @@ public class FenetreJeu extends JFrame implements ActionListener{
         setVisible(true);
 	}
 	
+	
+	
 	public void actionPerformed(ActionEvent e){
+        isBoutonConfirme = false;
         //clic sur le bouton règles
         if (e.getSource() == boutonRegles) {
             System.out.println("règles");
@@ -142,6 +193,7 @@ public class FenetreJeu extends JFrame implements ActionListener{
         //clic sur le bouton confirmer
         else if (e.getSource() == boutonConfirmer) {
             System.out.println("confirmer");
+            isBoutonConfirme = true;
             this.repaint();
         }
     }
@@ -188,4 +240,11 @@ public class FenetreJeu extends JFrame implements ActionListener{
             g.fillRect(0,0,taillePiece,taillePiece);
         }
     }*/
+    
+    
+    /* Instanciation de la fenêtre pour la tester */
+	
+	public static void main(String[] args){
+		FenetreJeu jeu = new FenetreJeu();
+	}
 }
