@@ -2,12 +2,12 @@ public class Plateau {
 	//Attributs
 	Piece [] listePieces;
 	Piece [][] grille;
+	int[] casesOccupees;
 	
 	//Constructeur
 	public Plateau(boolean isInventPiece){
 		listePieces = initPieces();
 		int indice = 0;
-		
 		grille = new Piece [4][4];
 		
 		if(isInventPiece){
@@ -21,6 +21,8 @@ public class Plateau {
 			for (int i=0 ; i< grille.length ;i++){
 				for (int j=0 ;j<grille[i].length; j++){
 					grille [i][j] = null;
+					casesOccupees[indice] = -1;
+					indice += 1;
 				}
 			}
 		}
@@ -82,8 +84,15 @@ public class Plateau {
 	 * @return : true si pleine, false sinon
 	 */
 	public boolean isPlein(){
-		// a compléter
-		return false;
+		
+		for(int i = 0; i < this.grille.length; i++){
+			for(int j = 0; j < this.grille[0].length; j++){
+				if(this.grille[i][j] == null){
+					return false;
+				}
+			}
+		}
+		return true;
 	} 
 	
 	

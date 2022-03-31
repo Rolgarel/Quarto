@@ -76,7 +76,10 @@ public class Piece {
 	}
 	
 	
+	
 	// Méthodes
+	
+	
 	
 	
 	

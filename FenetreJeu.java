@@ -39,9 +39,10 @@ public class FenetreJeu extends JFrame implements ActionListener{
     
     // Variables de jeu
     JeuQuarto jeu;
-    int etape = 0;
+    int etape = -1;
     ClickPanel[] pieceA = new ClickPanel[16]; // pieces plateau
     ClickPanel[] pieceB = new ClickPanel[16]; // pieces zone de selection laterale
+    int[] coordClick = new int[2];
     
 
   
@@ -124,12 +125,34 @@ public class FenetreJeu extends JFrame implements ActionListener{
             pieceA[i] = new ClickPanel(x, y, taillePiece);
             pieceA[i].setImage("test3");
 		}
+		
 		panneauPlateau.addMouseListener(new MouseAdapter() {
-            @Override 
-            public void mousePressed(MouseEvent e) {
-				System.out.println(e.getX() + "," + e.getY());
-            }
-        });
+            
+				@Override 
+				public void mousePressed(MouseEvent e) {
+					
+					//System.out.println(e.getX() + "," + e.getY());
+					coordClick[0] = e.getX();
+					coordClick[1] = e.getY();
+					
+					int tour = etape%4;
+					switch(tour){
+						case 0 :
+							jeu.joueurs[0].pieceChoisie = getPieceChoisie(coordClick);
+							break;
+						case 1 :
+							jeu.joueurs[1].caseChoisie = getCaseChoisie(coordClick);
+							break;
+						case 2 : 
+							jeu.joueurs[1].pieceChoisie = getPieceChoisie(coordClick);
+							break;
+						case 3 :
+							jeu.joueurs[1].caseChoisie = getCaseChoisie(coordClick);
+							break;
+					}
+				}
+			}
+        );
         
 		//Panneau haut
         panneauHaut = new JPanel();
@@ -223,7 +246,12 @@ public class FenetreJeu extends JFrame implements ActionListener{
             FenetreRegles regles = new FenetreRegles();
             
         } else if (e.getSource() == boutonConfirmer) {
-            //System.out.println("confirmer");
+			
+			if(etape == -1) {
+				etape += 1;
+			}
+            
+            //System.out.println("confirmer : etape " + etape);
             
             // MAJ de l'affichage
             this.repaint();
@@ -232,9 +260,15 @@ public class FenetreJeu extends JFrame implements ActionListener{
             jeu.actionJoueur(etape);
             
             if(jeu.isOver(etape)){
-				int etatFinJeu = jeu.getEtatFinJeu();
+				
+				int etatFinJeu = jeu.getEtatFinJeu(); // Joueur.estGagnant à implémenter
 				FenetreFinJeu finJeu = new FenetreFinJeu(etatFinJeu);
-				this.setVisible(false);
+				this.dispose();
+				
+			} else {
+			
+				setEtape(this.etape + 1);
+				
 			}
 			
         }
@@ -257,7 +291,7 @@ public class FenetreJeu extends JFrame implements ActionListener{
 		
         String s = "Tour du joueur ";
         if (etape < 0) {
-            s = "Erreur";
+            s = "La partie va commencer  : appuyez sur le bouton Confirmer";
         } else if ((etape%4) == 0) {
             s = s + "1 : Veuillez sélectionner une pièce pour le " + jeu.joueurs[1].nom;
         } else if ((etape%4) == 1) {
@@ -312,25 +346,29 @@ public class FenetreJeu extends JFrame implements ActionListener{
         //ImagePreparationGraphics.drawImage(Explosion,50,50,this);
         
         g.drawImage(ImagePreparation,0,0,this);
+        
         }
     }
     
-    /** getPieceChoisie()
+  
+  
+     /** getPieceChoisie()
      * Attend un click du joueur sur une piece et renvoie la pièce correspondante
      * @return : piece choisie par le joueur
      */
-    public static Piece getPieceChoisie(){
-		return null;
+    public static Piece getPieceChoisie(int[] coordClick){
+		return new Piece(false, false, false, false);
 	}
-    
-    /**isBoutonConfirme()
-	 * check si le bouton 
+	
+	/* getCaseChoisie()
+	 * Renvoie l'index de la case sur laquelle le joueur clique dans la zone plateau
+	 * @param : int[2] = coordonnées du click du joueur sur la plateau
+	 * @return : int = index de la case choisie par le joueur dans la zone plateau
 	 */
-	public static boolean isBoutonConfirme(){
-		return false;
-	} 
-  
-    
+	public int getCaseChoisie(int[] coordClick){
+		int caseChoisie = 0;
+		return caseChoisie;
+	}
     
     /* Le jeu est lancée depuis la fenêtre de jeu :
      * Il commence par l'instanciation du menu
