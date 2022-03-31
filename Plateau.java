@@ -4,19 +4,36 @@ public class Plateau {
 	Piece [][] grille;
 	
 	//Constructeur
-	public Plateau(){
+	public Plateau(boolean isInventPiece){
 		listePieces = initPieces();
+		int indice = 0;
 		
 		grille = new Piece [4][4];
-		for (int i=0 ; i< grille.length ;i++){
-			for (int j=0 ;j<grille[i].length; j++){
-				grille [i][j] = null;
+		
+		if(isInventPiece){
+			for (int i=0 ; i< grille.length ;i++){
+				for (int j=0 ;j<grille[i].length; j++){
+					grille [i][j] = listePieces[indice];
+					indice += 1;
+				}
+			}
+		} else {
+			for (int i=0 ; i< grille.length ;i++){
+				for (int j=0 ;j<grille[i].length; j++){
+					grille [i][j] = null;
+				}
 			}
 		}
+			
+		
+		
 	}
 	
+	
+	
 	//Methodes
-	/** initPiece()
+	
+	/** initPieces()
 	 * crée les pièces du jeu
 	 * @return : un tableau de pièces 
 	 */
@@ -60,9 +77,15 @@ public class Plateau {
 	}
 	
 	
-	public Piece getPiece(coord){
-		
-		return; 
-	}
+	/** isPlein()
+	 * check si la grille du plateau est pleine
+	 * @return : true si pleine, false sinon
+	 */
+	public boolean isPlein(){
+		// a compléter
+		return false;
+	} 
+	
+	
 
 }

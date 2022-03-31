@@ -1,47 +1,49 @@
 public class JeuQuarto {
 	
-	static Plateau plateau;
-	static Joueur[] joueurs;
+	// Attributs du jeu :
 	
-	public static void main(String[] args){
-		FenetreMenu menu = new FenetreMenu();
-		
-		int etatPartie = startGame();
-		gestionEndGame(etatPartie);
+	Plateau plateau;
+	Joueur[] joueurs;
+	Plateau piecesDispo;
+	Piece pieceChoisie;
+	
+	
+	
+	// Constructeur 
+	
+	public JeuQuarto(boolean isHuman){
+	
+		plateau = new Plateau(false);		// les pièces sont créés avec le plateau
+		piecesDispo = new Plateau(true);
+		joueurs = initJoueur(isHuman);
+		pieceChoisie = new Piece();
+			
 	}
 	
 	
-	public static int startGame(){
-		
-		plateau = new Plateau();  // les pièces sont créés avec le plateau
-		boolean isOver = false;
-		int etatPartie = 0;
-		joueurs = initJoueur();
-		int joueurCourant = 0;
-		int tour = 0;
-		
-		
-		while(isOver==false){
-			
-			if(tour==0){
-				Piece pieceChoisie = joueurs[joueurCourant].choisirPiece();
-				tour += 1;
-				joueurCourant = initNewCurrentJoueur(joueurCourant);
-			}
-			
-			joueurs[joueurCourant].placerPiece(pieceChoisie);
-			isOver = etreFinPartie();
-			
-			if(!isOver){
-				joueurs[joueurCourant].choisirPiece();
-				tour += 1;
-			}
-			
-			joueurCourant = initNewCurrentJoueur(joueurCourant);
-			
+	// Méthodes
+	
+	/* actionJoueur(int etape)
+     * @param : int etape : indique l'action qui doit être faite (mais pas qui doit le faire)
+     */
+    public void actionJoueur(int etape){
+ 
+		int tour = etape%4;
+		switch(tour){
+			case 0 :
+				pieceChoisie = joueurs[0].choisirPiece(piecesDispo);
+				break;
+			case 1 :
+				joueurs[1].placerPiece(pieceChoisie);
+				break;
+			case 2 : 
+				pieceChoisie = joueurs[1].choisirPiece(piecesDispo);
+				break;
+			case 3 :
+				joueurs[0].placerPiece(pieceChoisie);
+				break;
 		}
-		etatPartie = checkEtatPartie();
-		return etatPartie;
+		
 	}
 	
 	
@@ -59,27 +61,22 @@ public class JeuQuarto {
 		}
 	}
 	
-	// Dans la classe main : récupérer tour du jeu
-	/** initNewCurrentJoueur()
-	 * permet de lancer le tour de l'autre joueur
-	 * @return : entier = indice du joueur dans le tableau de joueur
-	 */
-	public static int initNewCurrentJoueur(int indiceJoueurCourant){
-		int indiceJoueur = 0;
-		if(indiceJoueurCourant == 0){
-			return 1;
-		} else {
-			return 0;
-		}
-	}
 	
 	/** initJoueur()
 	 * Initialise les joueurs
 	 */
-	public static Joueur[] initJoueur(){
-		Joueur[] joueurs = new Joueur[2];
-		joueurs[1] = new Joueur("Joueur 1");
-		joueurs[2] = new Joueur("Joueur 2");
+	public Joueur[] initJoueur(boolean isHuman){
+		
+		if(isHuman){
+			Joueur[] joueurs = new Joueur[2];
+			joueurs[0] = new Joueur("Joueur 1");
+			joueurs[1] = new Joueur("Joueur 2");
+		} else {
+			Joueur[] joueurs = new Joueur[2];
+			joueurs[0] = new Joueur("Joueur 1");
+			joueurs[1] = new Joueur("Ordi");
+		}
+		
 		return joueurs;
 	} 
 	
@@ -90,18 +87,26 @@ public class JeuQuarto {
 		//...
 	}
 	
-	/** etreFinPartie()
+	/** isOver(int etape)
 	 * permet de détecter la fin de la partie
 	 * @return : booléen, true si fin de partie, false sinon
 	 */ 
-	public static boolean etreFinPartie(){
-		boolean isOver;
-		if(joueurs[0].estGagnant() || joueurs[1].estGagnant() || etreEgalite()){
-			isOver = true;
-		} else {
-			isOver = false;
+	public boolean isOver(int etape){
+
+		int tour = etape%4;
+
+		if( (tour == 1 || tour == 3) && plateau.isPlein() ){
+			return true;
 		}
-		return isOver;
+		
+		if( tour == 1 && joueurs[1].estGagnant() ){
+			return true;
+		} else if(tour == 3 && joueurs[0].estGagnant() ){
+			return true;
+		} else {
+			return false;
+		}
+	
 	}
 	
 	
@@ -109,27 +114,28 @@ public class JeuQuarto {
 	 * permet de détecter s'il y a match nul
 	 * @return : booléen, true si match nul, false sinon
 	 */
-	public static boolean etreEgalite(){
+	public boolean etreEgalite(){
 		boolean egalite = false;
 		return egalite;
 	}
 	// cette méthode ne sert pas finalement
 
-	/** checkEtatPartie()
+	/** getEtatFinJeu()
 	 * renvoie :
 	 * 		1 si joueur 1 gagne
 	 * 		2 si joueur 2 gagne
-	 * 		3 si egalite
+	 * 		0 si egalite	
 	 */	
-	public static int checkEtatPartie(){
+	public int getEtatFinJeu(){
 		if(joueurs[0].estGagnant()){
 			return 1;
 		} else if(joueurs[1].estGagnant()){
 			return 2;
 		} else {
-			return 3;
+			return 0;
 		}
 	}
+	
 
 	
 }
