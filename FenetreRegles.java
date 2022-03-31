@@ -24,10 +24,10 @@ public class FenetreRegles extends JFrame {
 		
 	//Constructeur
 	public FenetreRegles (){
-		super ("Règles du jeu");
+		super ("Regles du jeu");
 		setSize (500, 500);
 		setLocation (100, 200);
-		setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
+		//setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
 		setLayout(null);
 		
 		fond = new JPanel ();
