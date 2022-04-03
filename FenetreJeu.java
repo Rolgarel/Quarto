@@ -39,10 +39,12 @@ public class FenetreJeu extends JFrame implements ActionListener{
     
     // Variables de jeu
     JeuQuarto jeu;
+  
     int etape = -1;
     ClickPanel[] pieceA = new ClickPanel[16]; // pieces plateau
     ClickPanel[] pieceB = new ClickPanel[16]; // pieces zone de selection laterale
     int[] coordClick = new int[2];
+    int selected = -1; //indice de la piece selectionnée, la zone de selection étant définie par l'étape
     
 
   
@@ -97,10 +99,25 @@ public class FenetreJeu extends JFrame implements ActionListener{
         
 		// Close opetation
         addWindowListener(new WindowAdapter(){
+				
 				public void windowClosing(WindowEvent e){
-					FenetreMenu menu = new FenetreMenu();
-					menu.setVisible(true);
-					setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+					
+					int result = JOptionPane.showConfirmDialog(null, "Etes-vous sur de vouloir quitter le jeu ?", "Pause", JOptionPane.OK_CANCEL_OPTION);
+					
+					if(result == JOptionPane.YES_OPTION){
+						//System.out.println("You pressed Yes");
+						setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+						FenetreMenu menu = new FenetreMenu();
+						menu.setVisible(true);
+						
+					} else {
+						// ATTENTION : vérifier que la fenetre intanciée reprend le jeu qui était en cours...
+						//System.out.println("You pressed Cancel");
+						FenetreJeu fenetreJeu = new FenetreJeu(isHuman);
+						fenetreJeu.setVisible(true);
+						fenetreJeu.jeu = jeu;
+					}
+					
 				}
 			}
 		);
@@ -229,7 +246,7 @@ public class FenetreJeu extends JFrame implements ActionListener{
 	
 	
 	/* actionPerformed(ActionEvent e)
-	 * permet de gérer les évènements de clique sur les boutons "Confiemer" et "Règles"
+	 * permet de gérer les évènements de clIC sur les boutons "Confiemer" et "Règles"
 	 * si "Règles" appuyé, affichage des règles dans une fenêtre extérieure
 	 * si "Confirmer" appuyé, fin de l'étape du jeu en cours et lancement de la suivante
 	 */
@@ -237,11 +254,6 @@ public class FenetreJeu extends JFrame implements ActionListener{
         
         if (e.getSource() == boutonRegles) {
             //System.out.println("règles");
-           
-            /*pieceB[4].isSelected = !pieceB[4].isSelected;
-            for (int i = 0; i < pieceA.length; i++) {
-                pieceA[i].setImage("test2");
-            }*/
             
             FenetreRegles regles = new FenetreRegles();
             
@@ -310,7 +322,7 @@ public class FenetreJeu extends JFrame implements ActionListener{
     
     
     
-    public void paint(Graphics g){
+   public void paint(Graphics g){
     
     panneauHaut.repaint(); //doit etre zone de commande
     
@@ -350,13 +362,14 @@ public class FenetreJeu extends JFrame implements ActionListener{
         }
     }
     
+    
   
   
      /** getPieceChoisie()
      * Attend un click du joueur sur une piece et renvoie la pièce correspondante
      * @return : piece choisie par le joueur
      */
-    public static Piece getPieceChoisie(int[] coordClick){
+    public Piece getPieceChoisie(int[] coordClick){
 		return new Piece(false, false, false, false);
 	}
 	
@@ -369,13 +382,16 @@ public class FenetreJeu extends JFrame implements ActionListener{
 		int caseChoisie = 0;
 		return caseChoisie;
 	}
-    
-    /* Le jeu est lancée depuis la fenêtre de jeu :
+	
+	
+	/* Le jeu est lancée depuis la fenêtre de jeu :
      * Il commence par l'instanciation du menu
      */
     public static void main(String[] args){
 		FenetreMenu menu = new FenetreMenu();
 	}
-    
 	
 }
+    
+	
+
