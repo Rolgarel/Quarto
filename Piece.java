@@ -1,3 +1,5 @@
+
+
 public class Piece {
 	
 	// Attributs
@@ -6,6 +8,7 @@ public class Piece {
 	private boolean couleur; 
 	private boolean creux;
 	private boolean estPlace;
+	public String codeImage;
 	
 	
 	// Constructeur
@@ -15,7 +18,7 @@ public class Piece {
 		this.couleur = couleur;
 		this.creux = creux;
 		estPlace = false;
-		
+		codeImage = this.trouverImage();
 	};
 	
 	public Piece(){
@@ -23,6 +26,7 @@ public class Piece {
 		rond = false;
 		couleur = false;
 		creux = false;
+		codeImage = null;
 		
 	}
 	
@@ -78,7 +82,35 @@ public class Piece {
 	
 	
 	// Méthodes
-	
+	private String trouverImage (){
+		String taille = "";
+		String forme = "";
+		String couleur = "";
+		String remplissage = "";
+		if (this.grand){
+			taille += "g";
+		}else{
+			taille += "p";
+		}
+		if (this.rond){
+			forme += "r";
+		}else{
+			forme += "c";
+		}
+		if (this.couleur){
+			couleur+= "a";
+		}else{
+			couleur += "b";
+		}
+		if (this.creux){
+			remplissage += "c";
+		}else{
+			remplissage += "p";
+		}
+		String code = taille + forme + couleur + remplissage +".png";
+		
+		return code;
+	}
 	
 	
 	

@@ -72,7 +72,7 @@ public class FenetreMenu extends JFrame implements ActionListener{
 		bRegles.setBounds(bRegleX, bRegleY, bWidth, bHeight);
 		bRegles.addActionListener(this);
 		
-		bHumain = new JButton("2 contre 2");
+		bHumain = new JButton("1 contre 1");
 		bHumain.setBounds(bHumainX, bHumainY, bWidth, bHeight);
 		bHumain.addActionListener(this);
 		

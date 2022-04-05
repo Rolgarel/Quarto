@@ -79,10 +79,11 @@ public class Plateau {
 	}
 	
 	
-	/** isPlein()
+	/** isGrillePleine()
 	 * check si la grille du plateau est pleine
 	 * @return : true si pleine, false sinon
 	 */
+/*
 	public boolean isPlein(){
 		
 		for(int i = 0; i < this.grille.length; i++){
@@ -93,8 +94,163 @@ public class Plateau {
 			}
 		}
 		return true;
-	} 
+	}*/
+
+	public boolean isGrillePleine(){
+		boolean plein = false;
+		int i =0;
+		while ((i<4) && (!isLignePleine(i))){
+			i++;
+		}
+		if (i>3){
+			plein = true;
+		}
+		return plein;
+	}
 	
+	/** isLignePleine
+	 * regarde si une ligne d'indice i est pleine
+	 * @return : true si pleine, false sinon
+	 */
+	public boolean isLignePleine (int i){
+		boolean plein = false;
+		int j =0;
+		while (j<4 && grille[i][j] != null){
+			j++;
+		}
+		if(j>3){
+			plein = true;
+		}
+		return plein ;
+	}
+	
+	/** isColonnePleine
+	 * regarde si une colonne d'indice i est pleine
+	 * @return : true si pleine, false sinon
+	 */
+	public boolean isColonnePleine (int i){
+		boolean plein = false;
+		int j =0;
+		while (j<4 && grille[j][i] != null){
+			j++;
+		}
+		if(j>3){
+			plein = true;
+		}
+		return plein;
+	}
+	
+	/** isDiagonalePleine
+	 * prend en param penteCroiss true pour la diag : / , et false pour la diag : \
+	 * @return : true si pleine, false sinon
+	 */
+	public boolean isDiagonalePleine (boolean penteCroiss){
+		boolean plein = false;
+		if (penteCroiss){
+			int i = 0;
+			while (i<4 && grille[i][i] != null){
+				i++;
+			}
+			if (i>3){
+				plein = true;
+			}
+		}else{
+			int i = 0;
+			int j = 3;
+			while (i<4 && j>=0 && grille[i][j] != null){
+				i++;
+				j--;
+			}
+			if (i>3){
+				plein = true;
+			}
+		}
+		return plein;
+	}
+	
+	/**alignementGagnantL
+	 * regarde si une ligne est gagnante
+	 * prend en param l'indice i de la ligne
+	 * @return : true si gagnant, false sinon
+	 */ 
+	public boolean alignementGagnantL (int i){
+		boolean gagnant = false;
+		int j =0;
+		boolean taille = grille[i][j].estGrand();
+		boolean forme = grille[i][j].estRond();
+		boolean cou = grille[i][j].getCouleur();
+		boolean remplissage = grille[i][j].estCreux();
+		while ((j<3) && (grille[i][j] != null) && (grille[i][j+1].estGrand() == taille) && (grille[i][j+1].estRond() == forme) && (grille[i][j+1].getCouleur() == cou) && (grille[i][j+1].estCreux ()== remplissage)){
+			j++;
+		}
+		if(j>2){
+			gagnant = true;
+		}
+		return gagnant ;
+		
+	}
+	
+	/**alignementGagnantC
+	 * regarde si une colonne est gagnante
+	 * prend en param l'indice i de la colonne
+	 * @return : true si gagnant, false sinon
+	 */ 
+	public boolean alignementGagnantC (int i){
+		boolean gagnant = false;
+		int j =0;
+		boolean taille = grille[j][i].estGrand();
+		boolean forme = grille[j][i].estRond();
+		boolean cou = grille[j][i].getCouleur();
+		boolean remplissage = grille[j][i].estCreux();
+		while ((j<3) && (grille[j][i] != null) && (grille[j+1][i].estGrand() == taille) && (grille[j+1][i].estRond() == forme) && (grille[j+1][i].getCouleur() == cou) && (grille[j+1][i].estCreux ()== remplissage)){
+			j++;
+		}
+		if(j>2){
+			gagnant = true;
+		}
+		return gagnant ;
+		
+	}
+	
+	/**alignementGagnantD
+	 * regarde si une diagonale est gagnante
+	 * prend en param penteCroiss true pour la diag : / , et false pour la diag : \
+	 * @return : true si gagnant, false sinon
+	 */ 
+	public boolean alignementGagnantD (boolean penteCroiss){
+		boolean gagnant = false;
+		if (penteCroiss){
+			int i = 0;
+			int j =0;
+			boolean taille = grille[i][i].estGrand();
+			boolean forme = grille[i][i].estRond();
+			boolean cou = grille[i][i].getCouleur();
+			boolean remplissage = grille[i][i].estCreux();
+			while ((i<3) && (grille[i][i] != null) && (grille[i+1][i+1].estGrand() == taille) && (grille[i+1][i+1].estRond() == forme) && (grille[i+1][i+1].getCouleur() == cou) && (grille[i+1][i+1].estCreux ()== remplissage)){
+				i++;
+			}
+			if (i>2){
+				gagnant = true;
+			}
+		}else{
+			int i = 0;
+			int j = 3;
+			boolean taille = grille[i][j].estGrand();
+			boolean forme = grille[i][j].estRond();
+			boolean cou = grille[i][j].getCouleur();
+			boolean remplissage = grille[i][j].estCreux();
+			while ((i<3) && (j>0) && (grille[i][j] != null) && (grille[i+1][j-1].estGrand() == taille) && (grille[i+1][j-1].estRond() == forme) && (grille[i+1][j-1].getCouleur() == cou) && (grille[i+1][j-1].estCreux ()== remplissage)){
+				i++;
+				j--;
+			}
+			if (i>2){
+				gagnant = true;
+			}
+		}
+		
+		return gagnant ;
+		
+	}
 	
 
 }
