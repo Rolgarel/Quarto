@@ -39,7 +39,7 @@ public class FenetreJeu extends JFrame implements ActionListener{
     
     // Variables de jeu
     JeuQuarto jeu;
-    int etape = 0;
+    int etape = -1;
     ClickPanel[] pieceA = new ClickPanel[16]; // pieces plateau
     ClickPanel[] pieceB = new ClickPanel[16]; // pieces zone de selection laterale
     
@@ -123,6 +123,7 @@ public class FenetreJeu extends JFrame implements ActionListener{
 			int y = (1+i-3*(i/4))*taillePiece;
             pieceA[i] = new ClickPanel(x, y, taillePiece);
             pieceA[i].setImage("test3");
+            
 		}
 		panneauPlateau.addMouseListener(new MouseAdapter() {
             @Override 
@@ -184,6 +185,7 @@ public class FenetreJeu extends JFrame implements ActionListener{
 			pieceB[i] = new ClickPanel(x, y, taillePiece);
 			pieceB[i].setImage("test2");
             //pieceB[i].setImage(imgPieces[i]);
+            //pieceB[i].setImage(jeu.plateau.listePieces[i].codeImage);
 		}
 		
 		
