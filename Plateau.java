@@ -2,7 +2,6 @@ public class Plateau {
 	//Attributs
 	Piece [] listePieces;
 	Piece [][] grille;
-	int[] casesOccupees;
 	
 	//Constructeur
 	public Plateau(boolean isInventPiece){
@@ -21,7 +20,6 @@ public class Plateau {
 			for (int i=0 ; i< grille.length ;i++){
 				for (int j=0 ;j<grille[i].length; j++){
 					grille [i][j] = null;
-					casesOccupees[indice] = -1;
 					indice += 1;
 				}
 			}
@@ -252,5 +250,19 @@ public class Plateau {
 		
 	}
 	
+	//new//Retourne la piece de la grille correspondant à l'indice i
+	public Piece getByIndiceGrille (int i) {
+		int y = i/4; //numero de la ligne
+		int x = i%4; //numero de la colone
+		return grille[y][x];
+	}
+	
+	public boolean isOccupee (int i) {
+		boolean b = true;
+		if (getByIndiceGrille(i) == null) {
+			b = false;
+		}
+		return b;
+	}
 
 }
