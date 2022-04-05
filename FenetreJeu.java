@@ -1,4 +1,3 @@
-
 import java.awt.*;
 import javax.swing.*;
 import java.awt.Color;
@@ -10,16 +9,16 @@ import java.awt.image.*;
 import javax.swing.UIManager;
 
 public class FenetreJeu extends JFrame implements ActionListener{
-	
-    //taille des éléments graphiques
+  
+  //taille des éléments graphiques
 	int tailleHaut = 150;
 	int taillePiece = 75;
 	int taillePlateau = 9*taillePiece;
 	int tailleBas = 100;
 	int hauteurFenetre = tailleHaut + tailleBas + taillePlateau;
 	int largeurFenetre = taillePlateau + (int)(6.5*taillePiece);
-    
-    //éléments graphiques
+  
+  //éléments graphique
     JLabel affEtape;
     JButton boutonConfirmer;
     JButton boutonRegles;
@@ -225,3 +224,4 @@ public class FenetreJeu extends JFrame implements ActionListener{
         }
     }
 }
+

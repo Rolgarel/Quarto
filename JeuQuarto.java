@@ -1,48 +1,92 @@
 public class JeuQuarto {
-
-	public static void main(String[] args){
-		int etatPartie = startGame();
-		endGame(etatPartie);
+	
+	// Attributs du jeu :
+	
+	Plateau plateau;
+	Joueur[] joueurs;
+	Plateau piecesDispo;
+	Piece pieceChoisie;
+	
+	
+	
+	// Constructeur 
+	
+	public JeuQuarto(boolean isHuman){
+	
+		plateau = new Plateau(false);		// les pièces sont créés avec le plateau
+		piecesDispo = new Plateau(true);
+		joueurs = initJoueur(isHuman);
+		pieceChoisie = new Piece();
+			
 	}
 	
 	
-	public int startGame(){
-		FenetreMenu menu = new FenetreMenu();
-		
-		Plateau plateau = new Plateau();
-		boolean isOver = false;
-		int etatPartie = 0;
-		
-		while(isOver==false){
-			isOver = etreFinPartie();
+	// Méthodes
+	
+	/* actionJoueur(int etape)
+     * @param : int etape : indique l'action qui doit être faite (mais pas qui doit le faire)
+     */
+    public void actionJoueur(int etape){
+ 
+		int tour = etape%4;
+		switch(tour){
+			case 0 :
+				pieceChoisie = joueurs[0].choisirPiece(piecesDispo);
+				break;
+			case 1 :
+				joueurs[1].placerPiece(pieceChoisie);
+				break;
+			case 2 : 
+				pieceChoisie = joueurs[1].choisirPiece(piecesDispo);
+				break;
+			case 3 :
+				joueurs[0].placerPiece(pieceChoisie);
+				break;
 		}
 		
-		return etatPartie;
 	}
 	
-	public void endGame(int etatPartie) {
-		
-		final int EGALITE = 3;
-		if(etatPartie == EGALITE){
-			//....
-		} else {
-			//.....
+	
+	
+	
+	// Méthodes du main
+	
+	public void gestionEndGame(int etatPartie) { // dans fentreFinJeu ?
+		switch (etatPartie) {
+			case 1 :
+				System.out.println (joueurs[etatPartie -1].nom + "a gagné.");
+				
+				break;
+			
+			case 2 :
+				System.out.println (joueurs[etatPartie-1].nom + "a gagné.");
+				break;
+				
+			case 3 :
+				System.out.println ("Personne n'a gagné.");
+				break;
 		}
 	}
 	
-	// Dans la classe main : récupérer tour du jeu
-	/** initJoueurSuivant()
-	 * permet de lancer le tour de l'autre joueur
-	 * @return : entier = indice du joueur dans le tableau de joueur
+	
+	/** initJoueur()
+	 * Initialise les joueurs
 	 */
-	public int initJoueurSuivant(int indiceJoueurCourant){
-		int indiceJoueur = 0;
-		if(indiceJoueurCourant == 0){
-			return 1;
+	public Joueur[] initJoueur(boolean isHuman){
+		
+		if(isHuman){
+			Joueur[] joueurs = new Joueur[2];
+			joueurs[0] = new Joueur("Joueur 1",plateau);
+			joueurs[1] = new Joueur("Joueur 2",plateau);
 		} else {
-			return 0;
+			Joueur[] joueurs = new Joueur[2];
+			joueurs[0] = new Joueur("Joueur 1",plateau);
+			joueurs[1] = new Joueur("Ordi",plateau);
 		}
-	}
+		
+		return joueurs;
+	} 
+	
 	/** initPartie()
 	 * permet d'initialiser la partie (???)
 	 */
@@ -50,28 +94,55 @@ public class JeuQuarto {
 		//...
 	}
 	
-	/** etreFinPartie()
+	/** isOver(int etape)
 	 * permet de détecter la fin de la partie
 	 * @return : booléen, true si fin de partie, false sinon
 	 */ 
-	public boolean etreFinPartie(){
-		return isOver;
+	public boolean isOver(int etape){
+
+		int tour = etape%4;
+
+		if( (tour == 1 || tour == 3) && plateau.isGrillePleine() ){
+			return true;
+		}
+		
+		if( tour == 1 && joueurs[1].estGagnant() ){
+			return true;
+		} else if(tour == 3 && joueurs[0].estGagnant() ){
+			return true;
+		} else {
+			return false;
+		}
+	
 	}
 	
-	/** estGagnant()
-	 * permet de détecter si le joueur a gagné
-	 * @return : booléen, true si le joueur a gagné, false sinon
-	 */
-	public boolean estGagnant(){
-		return gagne;
-	}
 	
-	/** etreEgalite()
+	/*/** etreEgalite()
 	 * permet de détecter s'il y a match nul
 	 * @return : booléen, true si match nul, false sinon
 	 */
-	public boolean etreEgalite(){
+	/*public boolean etreEgalite(){
+		boolean egalite = false;
 		return egalite;
+	}*/
+	// cette méthode ne sert pas finalement
+
+	/** getEtatFinJeu()
+	 * renvoie :
+	 * 		1 si joueur 1 gagne
+	 * 		2 si joueur 2 gagne
+	 * 		0 si egalite	
+	 */	
+	public int getEtatFinJeu(){
+		if(joueurs[0].estGagnant()){
+			return 1;
+		} else if(joueurs[1].estGagnant()){
+			return 2;
+		} else {
+			return 0;
+		}
 	}
+	
+
 	
 }

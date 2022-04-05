@@ -1,8 +1,6 @@
-
 import javax.swing.*;
-import java.awt.image.*;
 import java.awt.*;
-import java.awt.Color;
+
 
 public class ClickPanel {
     

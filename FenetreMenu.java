@@ -67,7 +67,7 @@ public class FenetreMenu extends JFrame implements ActionListener{
 		bRegles.setBounds(bRegleX, bRegleY, bWidth, bHeight);
 		bRegles.addActionListener(this);
 		
-		bHumain = new JButton("2 contre 2");
+		bHumain = new JButton("1 contre 1");
 		bHumain.setBounds(bHumainX, bHumainY, bWidth, bHeight);
 		bHumain.addActionListener(this);
 		
@@ -123,20 +123,15 @@ public class FenetreMenu extends JFrame implements ActionListener{
 			FenetreRegles regles = new FenetreRegles();
 		}
 		if(e.getSource() == bHumain){
-			//affichage fenêtre de jeu mode humain VS humain
+			FenetreJeu JeuHumain = new FenetreJeu(true);
+			dispose();
 		}
 		if(e.getSource() == bOrdi){
-			//affichage fenêtre de jeu mode humain VS ordi;
+			FenetreJeu JeuOrdi = new FenetreJeu(false);
+			dispose();
 		}
 	 }
 	 
-	 
-	 
-	 /* Instanciation de la fenêtre pour la tester */
-	
-	public static void main(String[] args){
-		FenetreMenu menu = new FenetreMenu();
-	}
 	
 
 }

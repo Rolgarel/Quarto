@@ -1,38 +1,54 @@
-/* pour créer dossier git
-git bash here
-terminal : git clone
-gitlab -> quarto -> bouton clone -> copier https://...
-terminal : git clone https://...
-*/
 
 
 public class Piece {
 	
-	// attributs
+	// Attributs
 	private boolean grand;  
 	private boolean rond;	
 	private boolean couleur; 
 	private boolean creux;
 	private boolean estPlace;
-	
-	/** formes des pièces
-	 * le nom donne les caractéristiques de pièces
-	 * 1ere lettre : g = grand, p = petit
-	 * 2eme lettre : r = rond, c = carré
-	 * 3eme lettre : a = (vert), b = (bleu)
-	 * 4eme lettre : c = creux, p = plein
-	 **/
+	public String codeImage;
 	
 	
-	// constructeur
+	// Constructeur
 	public Piece(boolean taille, boolean forme, boolean couleur, boolean creux){
 		grand = taille;
 		rond = forme;
 		this.couleur = couleur;
 		this.creux = creux;
 		estPlace = false;
-		
+		codeImage = this.trouverImage();
 	};
+	
+	public Piece(){
+		grand = false;
+		rond = false;
+		couleur = false;
+		creux = false;
+		codeImage = null;
+		
+	}
+	
+	/** toString()
+	 * donne le nom de la pièce
+	 * le nom = 4 lettres qui donnent ses caractéristiques :
+	 * 1ere lettre : g = grand, p = petit
+	 * 2eme lettre : r = rond, c = carré
+	 * 3eme lettre : a = (vert), b = (bleu)
+	 * 4eme lettre : c = creux, p = plein
+	 */
+	public String toString(){
+		
+		String name = "";
+		name += this.grand ? "g" : "p";
+		name += this.rond ? "r" : "c";
+		name += this.couleur ? "a" : "b";
+		name += this.creux ? "c" : "p";
+
+		return name;
+	}
+	
 	
 	
 	// getters
@@ -65,7 +81,35 @@ public class Piece {
 	
 	
 	// Méthodes
-	
+	private String trouverImage (){
+		String taille = "";
+		String forme = "";
+		String couleur = "";
+		String remplissage = "";
+		if (this.grand){
+			taille += "g";
+		}else{
+			taille += "p";
+		}
+		if (this.rond){
+			forme += "r";
+		}else{
+			forme += "c";
+		}
+		if (this.couleur){
+			couleur+= "a";
+		}else{
+			couleur += "b";
+		}
+		if (this.creux){
+			remplissage += "c";
+		}else{
+			remplissage += "p";
+		}
+		String code = taille + forme + couleur + remplissage +".png";
+		
+		return code;
+	}
 	
 	
 	
