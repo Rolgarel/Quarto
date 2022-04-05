@@ -51,13 +51,20 @@ public class JeuQuarto {
 	
 	// Méthodes du main
 	
-	public static void gestionEndGame(int etatPartie) {
-		
-		final int EGALITE = 3;
-		if(etatPartie == EGALITE){
-			// message fin de jeu avec égalité
-		} else {
-			// message fin de jeu avec joueur 1 ou 2 gagnant
+	public void gestionEndGame(int etatPartie) { // dans fentreFinJeu ?
+		switch (etatPartie) {
+			case 1 :
+				System.out.println (joueurs[etatPartie -1].nom + "a gagné.");
+				
+				break;
+			
+			case 2 :
+				System.out.println (joueurs[etatPartie-1].nom + "a gagné.");
+				break;
+				
+			case 3 :
+				System.out.println ("Personne n'a gagné.");
+				break;
 		}
 	}
 	
@@ -69,12 +76,12 @@ public class JeuQuarto {
 		
 		if(isHuman){
 			Joueur[] joueurs = new Joueur[2];
-			joueurs[0] = new Joueur("Joueur 1");
-			joueurs[1] = new Joueur("Joueur 2");
+			joueurs[0] = new Joueur("Joueur 1",plateau);
+			joueurs[1] = new Joueur("Joueur 2",plateau);
 		} else {
 			Joueur[] joueurs = new Joueur[2];
-			joueurs[0] = new Joueur("Joueur 1");
-			joueurs[1] = new Joueur("Ordi");
+			joueurs[0] = new Joueur("Joueur 1",plateau);
+			joueurs[1] = new Joueur("Ordi",plateau);
 		}
 		
 		return joueurs;
@@ -95,7 +102,7 @@ public class JeuQuarto {
 
 		int tour = etape%4;
 
-		if( (tour == 1 || tour == 3) && plateau.isPlein() ){
+		if( (tour == 1 || tour == 3) && plateau.isGrillePleine() ){
 			return true;
 		}
 		
@@ -110,14 +117,14 @@ public class JeuQuarto {
 	}
 	
 	
-	/** etreEgalite()
+	/*/** etreEgalite()
 	 * permet de détecter s'il y a match nul
 	 * @return : booléen, true si match nul, false sinon
 	 */
-	public boolean etreEgalite(){
+	/*public boolean etreEgalite(){
 		boolean egalite = false;
 		return egalite;
-	}
+	}*/
 	// cette méthode ne sert pas finalement
 
 	/** getEtatFinJeu()
