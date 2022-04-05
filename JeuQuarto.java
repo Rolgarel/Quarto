@@ -5,7 +5,7 @@ public class JeuQuarto {
 	Plateau plateau;
 	Joueur[] joueurs;
 	Plateau piecesDispo;
-	Piece pieceChoisie;
+	
 	
 	
 	
@@ -15,8 +15,7 @@ public class JeuQuarto {
 	
 		plateau = new Plateau(false);		// les pièces sont créés avec le plateau
 		piecesDispo = new Plateau(true);
-		joueurs = initJoueur(isHuman);
-		pieceChoisie = new Piece();
+		joueurs = initJoueurs(isHuman);
 			
 	}
 	
@@ -31,25 +30,22 @@ public class JeuQuarto {
 		int tour = etape%4;
 		switch(tour){
 			case 0 :
-				pieceChoisie = joueurs[0].choisirPiece(piecesDispo);
+				joueurs[0].choisirPiece(piecesDispo);
 				break;
 			case 1 :
-				joueurs[1].placerPiece(pieceChoisie);
+				joueurs[1].placerPiece(joueurs[0].pieceChoisie, this.plateau.casesOccupees);
 				break;
 			case 2 : 
-				pieceChoisie = joueurs[1].choisirPiece(piecesDispo);
+				joueurs[1].choisirPiece(piecesDispo);
 				break;
 			case 3 :
-				joueurs[0].placerPiece(pieceChoisie);
+				joueurs[0].placerPiece(joueurs[1].pieceChoisie, this.plateau.casesOccupees);
 				break;
 		}
 		
 	}
 	
 	
-	
-	
-	// Méthodes du main
 	
 	public void gestionEndGame(int etatPartie) { // dans fentreFinJeu ?
 		switch (etatPartie) {
@@ -87,13 +83,7 @@ public class JeuQuarto {
 		return joueurs;
 	} 
 	
-	/** initPartie()
-	 * permet d'initialiser la partie (???)
-	 */
-	public void initPartie(){
-		//...
-	}
-	
+
 	/** isOver(int etape)
 	 * permet de détecter la fin de la partie
 	 * @return : booléen, true si fin de partie, false sinon
@@ -106,26 +96,43 @@ public class JeuQuarto {
 			return true;
 		}
 		
-		if( tour == 1 && joueurs[1].estGagnant() ){
+		if( (tour == 1) && joueurs[1].estGagnant() ){
 			return true;
 		} else if(tour == 3 && joueurs[0].estGagnant() ){
 			return true;
 		} else {
 			return false;
 		}
-	
+		
 	}
 	
 	
-	/*/** etreEgalite()
-	 * permet de détecter s'il y a match nul
-	 * @return : booléen, true si match nul, false sinon
+
+	
+	
+	
+	// Méthodes
+	
+	/** initJoueur()
+	 * Initialise les joueurs
+	 * @param : boolean isHumain : true si Humain VS Human, false si contre ordi
+	 * @return : tableau Joueur[2]
 	 */
-	/*public boolean etreEgalite(){
-		boolean egalite = false;
-		return egalite;
-	}*/
-	// cette méthode ne sert pas finalement
+	public Joueur[] initJoueurs(boolean isHuman){
+		
+		if(isHuman){
+			joueurs = new Joueur[2];
+			joueurs[0] = new Joueur("Joueur 1");
+			joueurs[1] = new Joueur("Joueur 2");
+		} else {
+			joueurs = new Joueur[2];
+			joueurs[0] = new Joueur("Joueur 1");
+			joueurs[1] = new Joueur("Ordi");
+		}
+		
+		return joueurs;
+	} 
+	
 
 	/** getEtatFinJeu()
 	 * renvoie :
@@ -133,7 +140,10 @@ public class JeuQuarto {
 	 * 		2 si joueur 2 gagne
 	 * 		0 si egalite	
 	 */	
+	 
+	// Joueur.estGagant() à implémenter
 	public int getEtatFinJeu(){
+		
 		if(joueurs[0].estGagnant()){
 			return 1;
 		} else if(joueurs[1].estGagnant()){
@@ -141,8 +151,7 @@ public class JeuQuarto {
 		} else {
 			return 0;
 		}
-	}
-	
-
+		
+  }
 	
 }

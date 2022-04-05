@@ -1,12 +1,16 @@
-import javax.swing.*;
 import java.awt.Color;
 import java.awt.event.*;
+import java.awt.*;
+import javax.swing.*;
+
+
 
 public class FenetreMenu extends JFrame implements ActionListener{
 	
 	private JButton bRegles;
 	private JButton bHumain;
 	private JButton bOrdi;
+	private JLabel titreJeu;
 	
 	public FenetreMenu(){
 	
@@ -32,8 +36,8 @@ public class FenetreMenu extends JFrame implements ActionListener{
 		int bSpace = 10;
 		
 			// dimensions et positions des blocs
-		int blocBHeight = 2*bHeight + 3*bSpace;
-		int blocBWidth = 3*bWidth;
+		int blocBHeight = 2*bHeight + 3*bSpace; // 110
+		int blocBWidth = 3*bWidth; // 450
 		int blocBX = mainWidth/4;
 		int blocBY = mainHeight/2;
 				
@@ -52,12 +56,13 @@ public class FenetreMenu extends JFrame implements ActionListener{
 		int bOrdiY = bHumainY;
 		
 			// dimensions et positions du titre du Jeu
-				
-		int titreJeuWidth = 50;
-		int titreJeuHeight = 20;
+		
+			
+		int titreJeuWidth = 721;
+		int titreJeuHeight = 201;
 		int titreJeuX = mainWidth/2 - titreJeuWidth/2;
 		int titreJeuY = blocBY - titreJeuHeight - bSpace;
-	
+		
 		
 		
 		
@@ -75,31 +80,42 @@ public class FenetreMenu extends JFrame implements ActionListener{
 		bOrdi.setBounds(bOrdiX, bOrdiY, bWidth, bHeight);
 		bOrdi.addActionListener(this);
 		
-		
-		JLabel titreJeu = new JLabel("QUARTO");
+
+		titreJeu = new JLabel(new ImageIcon("quarto_logo.png"));
 		titreJeu.setSize(titreJeuWidth, titreJeuHeight);
 		titreJeu.setLocation(titreJeuX, titreJeuY);
 		
 		
-		/* Création des panels */
+		JLabel fondBlocB = new JLabel(new ImageIcon("fond_bloc_boutons.png"));
+		fondBlocB.setSize(blocBWidth, blocBHeight);
+		fondBlocB.setLocation(0,0);
 		
+		
+		
+		
+		/* Création des panels */
+	
 		JPanel BlocChoixJeu = new JPanel();
 		BlocChoixJeu.setLayout(null);
-		BlocChoixJeu.setBackground(new Color(244,164,96));
+		BlocChoixJeu.setBounds(blocChoixX, blocChoixY, blocChoixWidth, blocChoixHeight);
+		BlocChoixJeu.setBackground(new Color(200,235,230));
 		BlocChoixJeu.add(bHumain);
 		BlocChoixJeu.add(bOrdi);
-		BlocChoixJeu.setBounds(blocChoixX, blocChoixY, blocChoixWidth, blocChoixHeight);
+		
 		
 		JPanel BlocBoutons = new JPanel();
 		BlocBoutons.setLayout(null);
-		BlocBoutons.setBackground(new Color(244,164,96));
-		BlocBoutons.add(bRegles);
-		BlocBoutons.add(BlocChoixJeu);
 		BlocBoutons.setBounds(blocBX, blocBY, blocBWidth, blocBHeight);
+		BlocBoutons.setBackground(new Color(200,235,230));
+		BlocBoutons.add(BlocChoixJeu);
+		BlocBoutons.add(fondBlocB);
+		BlocBoutons.add(bRegles);
+		
+		
 		
 		JPanel BlocMain = new JPanel();
 		BlocMain.setLayout(null);
-		BlocMain.setBackground(new Color(255, 228, 181));
+		BlocMain.setBackground(new Color(200, 235, 230));
 		BlocMain.add(BlocBoutons);
 		BlocMain.add(titreJeu);
 		BlocMain.setBounds(0, 0, mainWidth, mainHeight);

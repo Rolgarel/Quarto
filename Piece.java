@@ -80,6 +80,7 @@ public class Piece {
 	}
 	
 	
+	
 	// Méthodes
 	private String trouverImage (){
 		String taille = "";
@@ -110,6 +111,8 @@ public class Piece {
 		
 		return code;
 	}
+	
+	
 	
 	
 	
