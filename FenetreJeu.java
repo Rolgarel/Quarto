@@ -138,9 +138,7 @@ public class FenetreJeu extends JFrame implements ActionListener{
 		
 		//Zone de pieces plateau
 		for (int i = 0; i < 16; i++) {
-			int x = (4+i-5*(i/4))*taillePiece;
-			int y = (1+i-3*(i/4))*taillePiece;
-            pieceA[i] = new ClickPanel(x, y, taillePiece);
+            pieceA[i] = new ClickPanel((4+i-5*(i/4))*taillePiece,tailleHaut+(1+i-3*(i/4))*taillePiece,taillePiece);
             pieceA[i].setImage("test3");
 		}
 		
@@ -218,12 +216,10 @@ public class FenetreJeu extends JFrame implements ActionListener{
         panneauLat.setOpaque(false); //rend  le JPanel invisible en affichant sont contenu
 		//panneauLat.setBackground(Color.gray); //couleur pour mettre en évidence le JPanel
 		
-		// Zone de pieces laterales
+		//Zone de pieces laterales
 		for (int i = 0; i < 16; i++) {
-			int x = (taillePiece/2)+(int)(1.5*taillePiece*(i%4));
-			int y = taillePiece+2*taillePiece*(i/4);
-			pieceB[i] = new ClickPanel(x, y, taillePiece);
-			pieceB[i].setImage("test2");
+			pieceB[i] = new ClickPanel(taillePlateau + (taillePiece/2)+(int)(1.5*taillePiece*(i%4)),tailleHaut+taillePiece+2*taillePiece*(i/4),taillePiece);
+            pieceB[i].setImage("test1");
             //pieceB[i].setImage(imgPieces[i]);
 		}
 		
@@ -275,7 +271,7 @@ public class FenetreJeu extends JFrame implements ActionListener{
             if(jeu.isOver(etape)){
 				
 				int etatFinJeu = jeu.getEtatFinJeu(); // Joueur.estGagnant à implémenter
-				FenetreFinJeu finJeu = new FenetreFinJeu(etatFinJeu);
+				FenetreFinJeu finJeu = new FenetreFinJeu(etatFinJeu, jeu.joueurs);
 				this.dispose();
 				
 			} else {
@@ -317,10 +313,6 @@ public class FenetreJeu extends JFrame implements ActionListener{
         affEtape.setText(s);
         
     }
-    
-    
-    
-    
     
     
    public void paint(Graphics g){
