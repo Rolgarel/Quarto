@@ -8,19 +8,12 @@ public class Joueur {
 	Piece pieceChoisie;
 	boolean piecePlace;
 	int caseChoisie;
-  Plateau plateau;
 	
 	//Constructeur
 	public Joueur (String unNom){
 		this.nom = unNom;
 		this.pieceChoisie = null;
 		this.caseChoisie = -1;
-
-	
-	//Constructeur
-	public Joueur (String unNom, Plateau unPlateau){
-		nom = unNom;
-		plateau = unPlateau;
 	}
 	
 	
@@ -58,6 +51,8 @@ public class Joueur {
 		return Arrays.toString(listeInt).contains(Integer.toString(entier));
 	}
 	
+
+	
 	
 	/** placerPiece()
 	 * permet au joueur de placer une pièce sur le plateau
@@ -70,50 +65,22 @@ public class Joueur {
 		piece.setPlace(true);
 		
 	}
+	
+
+
+	
+	
+	
+	
 	 
 	
 	/** estGagnant()
 	 * permet de détecter si le joueur a gagné
-	 * @return : true si gagnant, false sinon
+	 * @return : booléen, true si le joueur a gagné, false sinon
 	 */
 	public boolean estGagnant(){
-
-		boolean aGagne = false;
-		boolean ligne = false;
-		boolean colonne = false;
-		boolean diagonale = false;
-		int i =0;
-		
-		//test pour les lignes
-		while ((i<4) && (plateau.alignementGagnantL(i)==false)){
-			i++;
-		}
-		if (i>3){
-			ligne = true;
-		}
-		
-		//test pour les colonnes
-		while ((i<4) && (plateau.alignementGagnantC(i)==false)){
-			i++;
-		}
-		if (i>3){
-			colonne = true;
-		}
-		
-		//test pour les diagonales
-		boolean penteCroiss = plateau.alignementGagnantD (true);
-		boolean penteDecroiss = plateau.alignementGagnantD (false);
-		if (penteCroiss || penteDecroiss){
-			diagonale = true;
-		}
-		
-		//test gagnant
-		if (ligne || colonne || diagonale){
-			aGagne = true;
-		}
-		
-		return aGagne;
+		// A COMPLETER
+		return false;
 	}
+
 }
-
-

@@ -7,10 +7,10 @@ public class JeuQuarto {
 	Plateau piecesDispo;
 	
 	
-	
-	
-	// Constructeur 
-	
+	/* JeuQuarto(boolean)
+	 * Constructeur du jeu de Quarto
+	 * @param : true si humain vs humain, false si human vs ordi
+	 */
 	public JeuQuarto(boolean isHuman){
 	
 		plateau = new Plateau(false);		// les pièces sont créés avec le plateau
@@ -46,44 +46,6 @@ public class JeuQuarto {
 	}
 	
 	
-	
-	public void gestionEndGame(int etatPartie) { // dans fentreFinJeu ?
-		switch (etatPartie) {
-			case 1 :
-				System.out.println (joueurs[etatPartie -1].nom + "a gagné.");
-				
-				break;
-			
-			case 2 :
-				System.out.println (joueurs[etatPartie-1].nom + "a gagné.");
-				break;
-				
-			case 3 :
-				System.out.println ("Personne n'a gagné.");
-				break;
-		}
-	}
-	
-	
-	/** initJoueur()
-	 * Initialise les joueurs
-	 */
-	public Joueur[] initJoueur(boolean isHuman){
-		
-		if(isHuman){
-			Joueur[] joueurs = new Joueur[2];
-			joueurs[0] = new Joueur("Joueur 1",plateau);
-			joueurs[1] = new Joueur("Joueur 2",plateau);
-		} else {
-			Joueur[] joueurs = new Joueur[2];
-			joueurs[0] = new Joueur("Joueur 1",plateau);
-			joueurs[1] = new Joueur("Ordi",plateau);
-		}
-		
-		return joueurs;
-	} 
-	
-
 	/** isOver(int etape)
 	 * permet de détecter la fin de la partie
 	 * @return : booléen, true si fin de partie, false sinon
@@ -92,7 +54,7 @@ public class JeuQuarto {
 
 		int tour = etape%4;
 
-		if( (tour == 1 || tour == 3) && plateau.isGrillePleine() ){
+		if( (tour == 1 || tour == 3) && plateau.isPlein() ){
 			return true;
 		}
 		
@@ -106,12 +68,6 @@ public class JeuQuarto {
 		
 	}
 	
-	
-
-	
-	
-	
-	// Méthodes
 	
 	/** initJoueur()
 	 * Initialise les joueurs
@@ -141,7 +97,7 @@ public class JeuQuarto {
 	 * 		0 si egalite	
 	 */	
 	 
-	// Joueur.estGagant() à implémenter
+	// Joueur.estGagant() à implémenter : ELISA
 	public int getEtatFinJeu(){
 		
 		if(joueurs[0].estGagnant()){
@@ -152,6 +108,8 @@ public class JeuQuarto {
 			return 0;
 		}
 		
-  }
+	}
+	
+
 	
 }

@@ -4,5 +4,4 @@ public class TestFenetreJeu {
 		FenetreJeu f = new FenetreJeu(true);
         int i = 0;
 	}
-  
 }
