@@ -37,7 +37,9 @@ public class FenetreJeu extends JFrame implements ActionListener{
     private int etape = -1; //correspond au nombre de tours
     ClickPanel[] pieceA = new ClickPanel[16]; //pieces au niveau du plateau
     ClickPanel[] pieceB = new ClickPanel[16]; //pieces au niveau de la zone de selection laterale
-    int selected = -1; //indice de la piece selectionnée, la zone de selection étant définie par l'étape
+    //int selected = -1; //indice de la piece selectionnée, la zone de selection étant définie par l'étape
+    int selectA = -1;
+    int selectB = -1;
 	
 	public FenetreJeu () {
 		
@@ -64,12 +66,6 @@ public class FenetreJeu extends JFrame implements ActionListener{
             pieceA[i] = new ClickPanel((4+i-5*(i/4))*taillePiece,tailleHaut+(1+i-3*(i/4))*taillePiece,taillePiece);
             pieceA[i].setImage("test3");
 		}
-        /*panneauPlateau.addMouseListener(new MouseAdapter() {
-            @Override 
-            public void mousePressed(MouseEvent e) {
-            System.out.println(e.getX() + "," + e.getY());
-            }
-        });*/
         
         //Panneau haut
         panneauHaut = new JPanel();
@@ -123,18 +119,22 @@ public class FenetreJeu extends JFrame implements ActionListener{
 		panneauGlobal.addMouseListener(new MouseAdapter() {
             @Override 
             public void mousePressed(MouseEvent e) {
-				System.out.println(e.getX() + "," + e.getY());
+				//System.out.println(e.getX() + "," + e.getY());
 				if (etape > -1) {
 					if ((etape%2) != 0) {
 						for (int i = 0; i < pieceA.length; i++) {
 							if (pieceA[i].isIn(e.getX(),e.getY())) {
-								System.out.println("A" + i);
+								//System.out.println("A" + i);
+								selectA = i;
+								repaint();
 							}
 						}
 					} else {
 						for (int i = 0; i < pieceB.length; i++) {
 							if (pieceB[i].isIn(e.getX(),e.getY())) {
-								System.out.println("B" + i);
+								//System.out.println("B" + i);
+								selectB = i;
+								repaint();
 							}
 						}
 					}
@@ -177,11 +177,14 @@ public class FenetreJeu extends JFrame implements ActionListener{
         } else if ((etape%4) == 1) {
             s = s + "2 : Veuillez positionner la pièce";
         } else if ((etape%4) == 2) {
+			selectA = -1;
+			selectB = -1;
             s = s + "2 : Veuillez sélectionner une pièce pour le joueur 1";
         } else if ((etape%4) == 3) {
             s = s + "1 : Veuillez positionner la pièce";
         }
         affEtape.setText(s);
+        repaint();
     }
     
     public void paint(Graphics g){
@@ -200,10 +203,6 @@ public class FenetreJeu extends JFrame implements ActionListener{
             if (pieceA[i].image != null) {
                 ImagePreparationGraphics.drawImage(pieceA[i].image, pieceA[i].positionX, pieceA[i].positionY,this);
             }
-            /*if (pieceA[i].isSelected == true) {
-                ImagePreparationGraphics.setColor(Color.green);
-                ImagePreparationGraphics.drawRect(pieceA[i].positionX, pieceA[i].positionY, taillePiece, taillePiece);
-            }*/
         }
         for (int i = 0; i < pieceB.length; i++) {
             ImagePreparationGraphics.setColor(Color.gray);
@@ -211,21 +210,16 @@ public class FenetreJeu extends JFrame implements ActionListener{
             if (pieceB[i].image != null) {
                 ImagePreparationGraphics.drawImage(pieceB[i].image, pieceB[i].positionX, pieceB[i].positionY,this);
             }
-            /*if (pieceB[i].isSelected == true) {
-                ImagePreparationGraphics.setColor(Color.green);
-                ImagePreparationGraphics.drawRect( pieceB[i].positionX, pieceB[i].positionY, taillePiece, taillePiece);
-            }*/
         }
-        if ((etape > -1) && (selected > 0)) {
+        if (etape > -1) {
 			ImagePreparationGraphics.setColor(Color.green);
-			if ((etape%2) == 0) {
-				ImagePreparationGraphics.drawRect( pieceB[selected].positionX, pieceB[selected].positionY, taillePiece, taillePiece);
-			} else {
-				ImagePreparationGraphics.drawRect(pieceA[selected].positionX, pieceA[selected].positionY, taillePiece, taillePiece);
+			if (selectB > -1) {
+				ImagePreparationGraphics.drawRect( pieceB[selectB].positionX, pieceB[selectB].positionY, taillePiece, taillePiece);
+			}
+			if (selectA > -1) {
+				ImagePreparationGraphics.drawRect(pieceA[selectA].positionX, pieceA[selectA].positionY, taillePiece, taillePiece);
 			}
 		}
-		
-        //ImagePreparationGraphics.drawImage(Explosion,50,50,this);
         
         g.drawImage(ImagePreparation,2,35,this);
         }
