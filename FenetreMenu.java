@@ -55,9 +55,8 @@ public class FenetreMenu extends JFrame implements ActionListener{
 		int bOrdiX = bHumainX + bWidth + bSpace;
 		int bOrdiY = bHumainY;
 		
-			// dimensions et positions du titre du Jeu
 		
-			
+			// dimensions et positions du titre du Jeu
 		int titreJeuWidth = 721;
 		int titreJeuHeight = 201;
 		int titreJeuX = mainWidth/2 - titreJeuWidth/2;
@@ -72,7 +71,7 @@ public class FenetreMenu extends JFrame implements ActionListener{
 		bRegles.setBounds(bRegleX, bRegleY, bWidth, bHeight);
 		bRegles.addActionListener(this);
 		
-		bHumain = new JButton("2 contre 2");
+		bHumain = new JButton("1 contre 1");
 		bHumain.setBounds(bHumainX, bHumainY, bWidth, bHeight);
 		bHumain.addActionListener(this);
 		
@@ -94,11 +93,13 @@ public class FenetreMenu extends JFrame implements ActionListener{
 		
 		
 		/* Création des panels */
+		
+		Color bleuCiel = new Color(200,235,230);
 	
 		JPanel BlocChoixJeu = new JPanel();
 		BlocChoixJeu.setLayout(null);
 		BlocChoixJeu.setBounds(blocChoixX, blocChoixY, blocChoixWidth, blocChoixHeight);
-		BlocChoixJeu.setBackground(new Color(200,235,230));
+		BlocChoixJeu.setBackground(bleuCiel);
 		BlocChoixJeu.add(bHumain);
 		BlocChoixJeu.add(bOrdi);
 		
@@ -106,16 +107,15 @@ public class FenetreMenu extends JFrame implements ActionListener{
 		JPanel BlocBoutons = new JPanel();
 		BlocBoutons.setLayout(null);
 		BlocBoutons.setBounds(blocBX, blocBY, blocBWidth, blocBHeight);
-		BlocBoutons.setBackground(new Color(200,235,230));
+		BlocBoutons.setBackground(bleuCiel);
 		BlocBoutons.add(BlocChoixJeu);
 		BlocBoutons.add(fondBlocB);
 		BlocBoutons.add(bRegles);
 		
 		
-		
 		JPanel BlocMain = new JPanel();
 		BlocMain.setLayout(null);
-		BlocMain.setBackground(new Color(200, 235, 230));
+		BlocMain.setBackground(bleuCiel);
 		BlocMain.add(BlocBoutons);
 		BlocMain.add(titreJeu);
 		BlocMain.setBounds(0, 0, mainWidth, mainHeight);
