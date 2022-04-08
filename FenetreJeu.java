@@ -19,6 +19,7 @@ public class FenetreJeu extends JFrame implements ActionListener{
 	int tailleBas = 100;
 	int hauteurFenetre = tailleHaut + tailleBas + taillePlateau;
 	int largeurFenetre = taillePlateau + (int)(6.5*taillePiece);
+	// panel central + panneau bas : W=1162 et H=775
     
     // Eléments graphiques
     JLabel affEtape;
@@ -26,11 +27,13 @@ public class FenetreJeu extends JFrame implements ActionListener{
     JButton boutonRegles;
     JPanel panneauGlobal;
     JPanel panneauHaut;
+    JTextField choixPiece;
+    JTextField placerPiece;
     
     
     // Images
     Toolkit Tool = Toolkit.getDefaultToolkit();
-    Image wallpaper = Tool.getImage("space.png");
+    Image wallpaper = Tool.getImage("wallpaper.png");
     String[] imgPieces = new String[16];
     String[] nomImgPieces; 
     
@@ -225,6 +228,19 @@ public class FenetreJeu extends JFrame implements ActionListener{
 		}
 		
 		
+		// TextField pour choisir une pièce
+		int widthTextField = 300;
+		int heightTextField = 20;
+		choixPiece = new JTextField("Numero de la case de la piece chosie");
+		choixPiece.setBounds(0,0, widthTextField, heightTextField);
+		panneauHaut.add(choixPiece);
+		
+		// Panel pour placer une pièce
+		placerPiece = new JTextField("Numero de la case chosie");
+		placerPiece.setBounds(0,50, widthTextField, heightTextField);
+		panneauHaut.add(placerPiece);
+		
+		
         
 		// Panneau global
         panneauGlobal = new JPanel();
@@ -288,14 +304,14 @@ public class FenetreJeu extends JFrame implements ActionListener{
 			FenetreRegles regles = new FenetreRegles();
             
         } else if (e.getSource() == boutonConfirmer) {
-			
+			System.out.println("confirmer : etape " + etape);
 			if(etape == -1) {
 				setEtape(etape + 1);
 			} else {
 				this.repaint();  // MAJ de l'affichage
 				deroulementTour(etape); // Jeu
 			}
-            //System.out.println("confirmer : etape " + etape);
+            
         }
         
     }
@@ -307,18 +323,24 @@ public class FenetreJeu extends JFrame implements ActionListener{
 	public void deroulementTour(int etape){
 		
 		int tour = etape%4;	
-		
+		//
 		if(tour == 0 || tour == 2){
 	
 			int indiceJoueur = (tour==0)? 0 : 1;
-			if(jeu.joueurs[indiceJoueur].pieceChoisie.isNull || jeu.joueurs[indiceJoueur].pieceChoisie.estPlace){
-					System.out.println("La piece choisie est null ou est deja placee : erreur");
+			if( (jeu.joueurs[indiceJoueur].pieceChoisie.isNull || jeu.joueurs[indiceJoueur].pieceChoisie.estPlace) && etape>0){
+				System.out.println("La piece choisie est null ou est deja placee : erreur");
+			} else {
+				int casePieceChoisie = Integer.parseInt(choixPiece.getText());
+				jeu.joueurs[indiceJoueur].pieceChoisie = jeu.plateau.listePieces[casePieceChoisie];
+				System.out.println("La piece choisie par " + jeu.joueurs[indiceJoueur].nom + " est : " + jeu.joueurs[indiceJoueur].pieceChoisie.toString());
+				setEtape(etape + 1);
 			}
 			
 		} else {
 			int indiceJoueurChoix = (tour==1)? 0 : 1;
 			
-			placerPiece(jeu.joueurs[indiceJoueurChoix].pieceChoisie); // A implémenter
+			int numCase = Integer.parseInt(placerPiece.getText());
+			placerPiece(jeu.joueurs[indiceJoueurChoix].pieceChoisie, numCase, indiceJoueurChoix); // A implémenter
 			// placerPiece : tour = 1 alors joueurs[1] place joueurs[0].pieceChoisie
 			// tour = 3 alors l'inverse	
 			
@@ -330,7 +352,6 @@ public class FenetreJeu extends JFrame implements ActionListener{
 				setEtape(etape + 1);
 			}
 			
-			
 		}
 			
 	}
@@ -339,9 +360,13 @@ public class FenetreJeu extends JFrame implements ActionListener{
     /* placerPiece()
      * Place une pièce dans la grille du plateau : 
      * MAJ de la grille et de la piece dans la liste de pieces
-     * @param : Piece
+     * @param : Piece, int numéro de case
      */ 
-    public void placerPiece(Piece piece){}
+    
+    public void placerPiece(Piece piece, int numCase, int numJoueur){
+		//jeu.plateau.grille[numCase] = jeu.joueurs[numJoueur].pieceChoisie;
+		piece.estPlace = true;
+	}
     
     
     /* setEtape(int e)

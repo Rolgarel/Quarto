@@ -3,6 +3,7 @@ public class Plateau {
 	//Attributs
 	Piece [] listePieces;
 	Piece [][] grille;
+	//Piece[] grille;
 	
 	//Constructeur
 	public Plateau(){
@@ -10,6 +11,8 @@ public class Plateau {
 		listePieces = initPieces();
 		
 		int indice = 0;
+		//grille = new Piece[16];
+		
 		grille = new Piece[4][4];
 		
 		for (int i=0; i < grille.length; i++){
@@ -18,6 +21,7 @@ public class Plateau {
 				indice += 1;
 			}
 		}
+		
 		
 	}
 	
@@ -74,6 +78,7 @@ public class Plateau {
 	 * check si la grille du plateau est pleine
 	 * @return : true si pleine, false sinon
 	 */
+	
 	public boolean isGrillePleine(){
 		boolean plein = false;
 		int i =0;
@@ -91,6 +96,7 @@ public class Plateau {
 	 * regarde si une ligne d'indice i est pleine
 	 * @return : true si pleine, false sinon
 	 */
+	
 	public boolean isLignePleine (int i){
 		boolean plein = false;
 		int j =0;
@@ -107,6 +113,8 @@ public class Plateau {
 	 * regarde si une colonne d'indice i est pleine
 	 * @return : true si pleine, false sinon
 	 */
+	
+	
 	public boolean isColonnePleine (int i){
 		boolean plein = false;
 		int j =0;
@@ -123,6 +131,7 @@ public class Plateau {
 	 * prend en param penteCroiss true pour la diag : / , et false pour la diag : \
 	 * @return : true si pleine, false sinon
 	 */
+	
 	public boolean isDiagonalePleine (boolean penteCroiss){
 		boolean plein = false;
 		if (penteCroiss){
@@ -152,6 +161,7 @@ public class Plateau {
 	 * prend en param l'indice i de la ligne
 	 * @return : true si gagnant, false sinon
 	 */ 
+	
 	public boolean alignementGagnantL (int i){
 		boolean gagnant = false;
 		int j =0;
@@ -174,6 +184,7 @@ public class Plateau {
 	 * prend en param l'indice i de la colonne
 	 * @return : true si gagnant, false sinon
 	 */ 
+	
 	public boolean alignementGagnantC (int i){
 		boolean gagnant = false;
 		int j =0;
@@ -196,6 +207,7 @@ public class Plateau {
 	 * prend en param penteCroiss true pour la diag : / , et false pour la diag : \
 	 * @return : true si gagnant, false sinon
 	 */ 
+	 
 	public boolean alignementGagnantD (boolean penteCroiss){
 		boolean gagnant = false;
 		if (penteCroiss){
@@ -232,6 +244,7 @@ public class Plateau {
 	}
 	
 	//new//Retourne la piece de la grille correspondant à l'indice i
+	
 	public Piece getPieceByIndice(int indiceCase, boolean isGrille) {
 		
 		if(isGrille){

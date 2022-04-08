@@ -22,7 +22,6 @@ public class Piece {
 	
 	public Piece(){
 		isNull = true;
-		
 	}
 	
 	/** toString()

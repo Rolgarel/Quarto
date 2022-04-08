@@ -13,7 +13,7 @@ public class Joueur {
 	//Constructeur
 	public Joueur (String unNom){
 		this.nom = unNom;
-		this.pieceChoisie = null;
+		this.pieceChoisie = new Piece();
 		this.caseChoisie = -1;
 	}
 
