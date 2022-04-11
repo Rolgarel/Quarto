@@ -24,79 +24,56 @@ public class Joueur {
 		plateau = unPlateau;
 	}
 	
-	
+
 	
 	// Méthodes
 	
-	/** choisirPiece()
-	 * permet au joueur de chosir une pièce pour son adversaire, parmi celles jouables :
-	 * 		- le joueur clique sur une pièce
-			- son choix est fait quand il clique sur le bouton "confirmer"
-	 */
-	public void choisirPiece(){
-		
-		if(this.pieceChoisie == null && !pieceChoisie.estPlace){
-			
-		}
-		
-	}
-	
-	
-	
-	
-	/** placerPiece()
-	 * permet au joueur de placer une pièce sur le plateau
-	 * MAJ de l'attribut 'estPlace' de la pièce placée par le joueur
-	 * @param : Piece, int[] liste des cases déjà occupées
-	 */
-	public void placerPiece(Piece piece){
-		
-		while(this.caseChoisie < 0 && plateau.isOccupee(caseChoisie)){}
-		piece.setPlace(true);
-		
-	}
-	 
 	
 	/** estGagnant()
 	 * permet de détecter si le joueur a gagné
 	 * @return : true si gagnant, false sinon
 	 */
-	public boolean estGagnant(){
-
-		boolean aGagne = false;
-		boolean ligne = false;
-		boolean colonne = false;
-		boolean diagonale = false;
-		int i =0;
+	public boolean estGagnant(Plateau plateau){
+		
+		int i=0;
 		
 		//test pour les lignes
-		while ((i<4) && (plateau.alignementGagnantL(i)==false)){
+		// i = le numére de ligne, il y en a 4 numérotées de 0 à 3 inclus
+		while (plateau.ligneColonneGagnante(i, "l")==false && i<4){ // ligneColonneGagnante() OK
 			i++;
 		}
-		if (i>3){
-			ligne = true;
+		System.out.println("i = " + i);
+		if(i!=4){
+			System.out.println("Ligne gagnante");
+			return true;
+		} else {
+			// si i=4 on fait un autre test
+			i = 0;
 		}
+		System.out.println("Aucune ligne gagnante");
+		
 		
 		//test pour les colonnes
-		while ((i<4) && (plateau.alignementGagnantC(i)==false)){
+		// i = le numéro de colonne, il y en a 4  numérotées de 0 à 3 inclus
+		while (plateau.ligneColonneGagnante(i, "c")==false && i<4){  // ligneColonneGagnante() OK
 			i++;
 		}
-		if (i>3){
-			colonne = true;
-		}
+		if(i<4){
+			System.out.println("Colonne gagnante");
+			return true;
+		}// on fait un autre test
+		System.out.println("Aucune colonne gagnante");
+		
 		
 		//test pour les diagonales
-		boolean penteCroiss = plateau.alignementGagnantD (true);
-		boolean penteDecroiss = plateau.alignementGagnantD (false);
-		if (penteCroiss || penteDecroiss){
-			diagonale = true;
+		boolean penteCroiss = plateau.alignementGagnantD(true);
+		boolean penteDecroiss = plateau.alignementGagnantD(false);
+		if(penteCroiss || penteDecroiss){
+			String s = (penteCroiss)? "Horizontale gagnante" : "Verticale gagnante";
+			return true;
 		}
 		
-		//test gagnant
-		if (ligne || colonne || diagonale){
-			aGagne = true;
-		}
-		
-		return aGagne;
+		// Si tous les tests sont négatifs :
+		return false;
 	}
 }

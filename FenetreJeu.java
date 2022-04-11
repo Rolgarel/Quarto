@@ -30,6 +30,14 @@ public class FenetreJeu extends JFrame implements ActionListener{
     JTextField choixPiece;
     JTextField placerPiece;
     
+    /* Couleurs des éléments graphiques 
+     * piece a : A32A8B
+     * piece b : FFD036
+     * wallpaper = case B : D1BCE0
+     * case A : 94859E
+     */
+    
+    
     
     // Images
     Toolkit Tool = Toolkit.getDefaultToolkit();
@@ -50,6 +58,7 @@ public class FenetreJeu extends JFrame implements ActionListener{
     int[] coordClick = new int[2];
     int selectA = -1;
     int selectB = -1;
+    
     
 	
   
@@ -139,8 +148,9 @@ public class FenetreJeu extends JFrame implements ActionListener{
 			int x = (4+i-5*(i/4))*taillePiece;
 			int y = tailleHaut+(1+i-3*(i/4))*taillePiece;
             pieceA[i] = new ClickPanel(x, y, taillePiece);
-            pieceA[i].setImage("test3");
+            pieceA[i].setImage("fondClickPanelA");
 		}
+		
 		
 		
 		panneauPlateau.addMouseListener(new MouseAdapter() {
@@ -224,7 +234,7 @@ public class FenetreJeu extends JFrame implements ActionListener{
 			int x = taillePlateau + (taillePiece/2)+(int)(1.5*taillePiece*(i%4));
 			int y = tailleHaut+taillePiece+2*taillePiece*(i/4);
 			pieceB[i] = new ClickPanel(x, y,taillePiece);
-            pieceB[i].setImage(nomImgPieces[i]);
+			pieceB[i].setImage("fondClickPanelB", nomImgPieces[i]);
 		}
 		
 		
@@ -268,6 +278,7 @@ public class FenetreJeu extends JFrame implements ActionListener{
 	 */
 	public String[] initImgPieces(){
 		String[] imgPieces = new String[16];
+		
 		imgPieces[0] = "grac";
         imgPieces[1] = "grbc";
         imgPieces[2] = "grap";
@@ -324,33 +335,38 @@ public class FenetreJeu extends JFrame implements ActionListener{
 		
 		int tour = etape%4;	
 		//
-		if(tour == 0 || tour == 2){
+		if(tour == 0 || tour == 2){  // alors l'action = un choix de pièce
 	
 			int indiceJoueur = (tour==0)? 0 : 1;
-			if( (jeu.joueurs[indiceJoueur].pieceChoisie.isNull || jeu.joueurs[indiceJoueur].pieceChoisie.estPlace) && etape>0){
-				System.out.println("La piece choisie est null ou est deja placee : erreur");
+			int casePieceChoisie = Integer.parseInt(choixPiece.getText());
+			jeu.joueurs[indiceJoueur].pieceChoisie = jeu.plateau.listePieces[casePieceChoisie];
+			
+			if((jeu.joueurs[indiceJoueur].pieceChoisie.isNull || jeu.joueurs[indiceJoueur].pieceChoisie.estPlace)){
+				affEtape.setText("Vous n'avez pas choisi de piece ou la piece est deja placee. Recommencez.");
+				//System.out.println("La case choisie est : " + Integer.parseInt(choixPiece.getText()));
+				//System.out.println("La piece choisie par le " + jeu.joueurs[indiceJoueur].nom + " est null : " + jeu.joueurs[indiceJoueur].pieceChoisie.isNull);
 			} else {
-				int casePieceChoisie = Integer.parseInt(choixPiece.getText());
-				jeu.joueurs[indiceJoueur].pieceChoisie = jeu.plateau.listePieces[casePieceChoisie];
-				System.out.println("La piece choisie par " + jeu.joueurs[indiceJoueur].nom + " est : " + jeu.joueurs[indiceJoueur].pieceChoisie.toString());
+				//System.out.println("La piece choisie par " + jeu.joueurs[indiceJoueur].nom + " est : " + jeu.joueurs[indiceJoueur].pieceChoisie.toString());
 				setEtape(etape + 1);
 			}
 			
-		} else {
+		} else { // alors l'action = un placement de pièce
 			int indiceJoueurChoix = (tour==1)? 0 : 1;
-			
 			int numCase = Integer.parseInt(placerPiece.getText());
-			placerPiece(jeu.joueurs[indiceJoueurChoix].pieceChoisie, numCase, indiceJoueurChoix); // A implémenter
-			// placerPiece : tour = 1 alors joueurs[1] place joueurs[0].pieceChoisie
-			// tour = 3 alors l'inverse	
-			
-			if(jeu.isOver(etape)){
-				int etatFinJeu = jeu.getEtatFinJeu(); // Joueur.estGagnant à implémenter
-				FenetreFinJeu finJeu = new FenetreFinJeu(etatFinJeu, jeu.joueurs);
-				this.dispose();
+			if(jeu.plateau.grille[numCase].isNull){
+				placerPiece(jeu.joueurs[indiceJoueurChoix].pieceChoisie, numCase, indiceJoueurChoix);
+				
+				if(jeu.isOver(etape)){
+					System.out.println("Etat fin de jeu : " + jeu.etatFinJeu);
+					FenetreFinJeu finJeu = new FenetreFinJeu(jeu.etatFinJeu, jeu.joueurs);
+				} else {
+					setEtape(etape + 1);
+				}
+				
 			} else {
-				setEtape(etape + 1);
+				affEtape.setText("La case choisie est deja occupee. Recommencez.");
 			}
+
 			
 		}
 			
@@ -360,13 +376,24 @@ public class FenetreJeu extends JFrame implements ActionListener{
     /* placerPiece()
      * Place une pièce dans la grille du plateau : 
      * MAJ de la grille et de la piece dans la liste de pieces
-     * @param : Piece, int numéro de case
+     * @param : 
+     * 		piece = Piece choisie par le joueur précédent
+     * 		numCase = int numéro de la case choisie par le joueur
+     * 		numJoueur = int indice du joueur précedent
      */ 
-    
     public void placerPiece(Piece piece, int numCase, int numJoueur){
-		//jeu.plateau.grille[numCase] = jeu.joueurs[numJoueur].pieceChoisie;
+		
+		jeu.plateau.grille[numCase] = piece;
+		jeu.joueurs[(numJoueur==0)? 1 : 0].caseChoisie = -1;
 		piece.estPlace = true;
+		jeu.joueurs[numJoueur].pieceChoisie = new Piece();
+		
+		pieceA[numCase].setImage("fondClickPanelA", piece.toString());
+		pieceB[piece.place].setImage("fondCLickPanelB");
+		
 	}
+	
+
     
     
     /* setEtape(int e)

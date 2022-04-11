@@ -4,6 +4,7 @@ public class JeuQuarto {
 	
 	Plateau plateau;
 	Joueur[] joueurs;
+	int etatFinJeu = -1;
 	
 	
 	
@@ -38,76 +39,33 @@ public class JeuQuarto {
 		return joueurs;
 	} 
 	
-	
-	/* actionJoueur(int etape)
-     * @param : int etape : indique l'action qui doit être faite (mais pas qui doit le faire)
-     */
-    
-	
-	
-	/* gestionEndGame(int etatPartie)
-	 * Affiche dans le terminal l'état de fin de jeu : joueur 1 gagnant, ou joueur 2, ou égalité
-	 * @param : int etatPartie : 1 = joueur 1 gagnant, 2 = joueur 2 gagnant, 3 = égalité
-	 */
-	public void gestionEndGame(int etatPartie) { // dans fentreFinJeu ?
-		switch (etatPartie) {
-			case 1 :
-				System.out.println (joueurs[etatPartie -1].nom + "a gagné.");
-				
-				break;
-			
-			case 2 :
-				System.out.println (joueurs[etatPartie-1].nom + "a gagné.");
-				break;
-				
-			case 3 :
-				System.out.println ("Personne n'a gagné.");
-				break;
-		}
-	}
-	
-	
 
 	/** isOver(int etape)
 	 * permet de détecter la fin de la partie
-	 * @return : booléen, true si fin de partie, false sinon
+	 * @return : booléen = true si fin de partie, false sinon
 	 */ 
 	public boolean isOver(int etape){
 
 		int tour = etape%4;
-
-		if( (tour == 1 || tour == 3) && plateau.isGrillePleine() ){
-			return true;
-		}
 		
-		if( (tour == 1) && joueurs[1].estGagnant() ){
+		if( (tour == 1) && joueurs[1].estGagnant(plateau) ){
+			System.out.println(joueurs[1].nom + " a gagne : fin du jeu.");
+			etatFinJeu = 2;
 			return true;
-		} else if(tour == 3 && joueurs[0].estGagnant() ){
+		} else if(tour == 3 && joueurs[0].estGagnant(plateau) ){
+			System.out.println(joueurs[0].nom + " a gagne : fin du jeu.");
+			etatFinJeu = 1;
+			return true;
+		} else if(plateau.isGrillePleine()){
+			System.out.println("Egalité : le plateau est plein");
+			etatFinJeu = 0;
 			return true;
 		} else {
+			System.out.println("Le jeu continue.");
 			return false;
 		}
-		
+
 	}
 
-	
-
-	/** getEtatFinJeu()
-	 * renvoie :
-	 * 		1 si joueur 1 gagne
-	 * 		2 si joueur 2 gagne
-	 * 		0 si egalite	
-	 */	
-	public int getEtatFinJeu(){
-		
-		if(joueurs[0].estGagnant()){
-			return 1;
-		} else if(joueurs[1].estGagnant()){
-			return 2;
-		} else {
-			return 0;
-		}
-		
-  }
 	
 }

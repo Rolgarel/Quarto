@@ -5,20 +5,23 @@ public class Piece {
 	private boolean rond;	
 	private boolean couleur; 
 	private boolean creux;
-	boolean isNull;
-	boolean estPlace;
+	public boolean isNull;
+	public boolean estPlace;
 	public String codeImage;
+	public int place;
 	
 	
 	// Constructeur
-	public Piece(boolean taille, boolean forme, boolean couleur, boolean creux){
-		grand = taille;
-		rond = forme;
+	public Piece(boolean taille, boolean forme, boolean couleur, boolean creux, int place){
+		this.grand = taille;
+		this.rond = forme;
 		this.couleur = couleur;
 		this.creux = creux;
-		estPlace = false;
-		codeImage = this.trouverImage();
-	};
+		this.estPlace = false;
+		this.codeImage = this.trouverImage();
+		this.place = place;
+		this.isNull =  false;
+	}
 	
 	public Piece(){
 		isNull = true;

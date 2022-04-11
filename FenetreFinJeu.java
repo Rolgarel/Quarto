@@ -30,8 +30,8 @@ public class FenetreFinJeu  extends JFrame{
 		
 		switch (etatFinJeu) {
 			case 1 :
-				System.out.println (joueurs[etatFinJeu -1].nom + "a gagné.");
-				s += joueurs[etatFinJeu -1].nom + " a gagné.";
+				System.out.println (joueurs[etatFinJeu-1].nom + "a gagné.");
+				s += joueurs[etatFinJeu-1].nom + " a gagné.";
 				break;
 			
 			case 2 :
@@ -39,7 +39,7 @@ public class FenetreFinJeu  extends JFrame{
 				s += joueurs[etatFinJeu-1].nom + " a gagné.";
 				break;
 				
-			case 3 :
+			case 0 :
 				System.out.println ("Personne n'a gagné.");
 				s += " Personne n'a gagné.";
 				break;
@@ -52,9 +52,5 @@ public class FenetreFinJeu  extends JFrame{
 		
 		setVisible(true);
 	}
-	
-	
-	
-	// Création de la fenêtre
 
 }
