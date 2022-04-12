@@ -10,7 +10,7 @@ import javax.swing.UIManager;
 
 
 
-public class FenetreJeu extends JFrame implements ActionListener{
+public class FenetreJeuTest extends JFrame implements ActionListener{
 	
     // Taille des éléments graphiques
 	int tailleHaut = 150;
@@ -64,10 +64,10 @@ public class FenetreJeu extends JFrame implements ActionListener{
   
 	
 	// Constructeur
-	public FenetreJeu(boolean isHuman) {
+	public FenetreJeuTest(Plateau unPlateau, int[] uneListeCases) {
 		
 		/* Instanciation des variables du jeu */
-		jeu = new JeuQuarto(isHuman);
+		jeu = new JeuQuarto(unPlateau);
 		
 		/* Images pièces */
 		nomImgPieces = initImgPieces(); 
@@ -512,6 +512,3 @@ public class FenetreJeu extends JFrame implements ActionListener{
 	}
 	
 }
-    
-	
-

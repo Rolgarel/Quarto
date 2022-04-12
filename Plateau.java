@@ -1,7 +1,7 @@
 public class Plateau {
 	
 	//Attributs
-	Piece [] listePieces;
+	private Piece [] listePieces;
 	//Piece [][] grille;
 	Piece[] grille;
 	
@@ -15,6 +15,12 @@ public class Plateau {
 			grille[i] = new Piece();
 		}
 	
+	}
+	
+	
+	// Getters
+	public Piece[] getListePieces(){
+		return this.listePieces;
 	}
 	
 	
@@ -135,10 +141,15 @@ public class Plateau {
 			return false;
 		} // sinon on check la ligne
 		
-		boolean pleine = (s=="l")? isLigneColonnePleine(i, "l") : isLigneColonnePleine(i, "c");
-		//String result = "";
-		//result = (s=="l")? "la ligne":"la colonne";
-		//System.out.println(result + " " + i + " est pleine : " + pleine);
+		boolean pleine = false;
+		if(s=="l"){
+			pleine = isLigneColonnePleine(i, "l");
+		} else { // si s = "c"
+			pleine = isLigneColonnePleine(i, "c");
+		}
+		String result = "";
+		result = (s=="l")? "la ligne":"la colonne";
+		System.out.println(result + " " + i + " est pleine : " + pleine);
 		if(!pleine){
 			return false;
 		} // si la ligne/colonne est pleine, on check les caractéristiques des pièces

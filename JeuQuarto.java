@@ -17,6 +17,12 @@ public class JeuQuarto {
 			
 	}
 	
+	public JeuQuarto(Plateau plateau){
+		this.plateau = plateau;
+		joueurs = initJoueurs(true);
+	}
+	
+	
 	
 	// Méthodes
 	

@@ -1,5 +1,8 @@
 import javax.swing.*;
 import java.awt.Color;
+import javax.swing.JOptionPane;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 
 public class FenetreFinJeu  extends JFrame{
@@ -16,6 +19,28 @@ public class FenetreFinJeu  extends JFrame{
 		setLocation (200, 200);
 		setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);
 		setLayout(null);
+		
+		/* Close opetation :
+		 * Une fenêtre popup s'ouvre pour confirmer l'arrêt du jeu.
+		 * ATTENTION : vérifier que le bouton cancel reprend la partie qui était en cours
+		 */
+		
+        addWindowListener(new WindowAdapter(){
+				
+				public void windowClosing(WindowEvent e){
+					
+					int result = JOptionPane.showConfirmDialog(null, "Vous allez revenir au menu", "Information", JOptionPane.OK_CANCEL_OPTION);
+					
+					if(result == JOptionPane.OK_OPTION){
+						System.out.println("You pressed OK");
+						setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+						FenetreMenu menu = new FenetreMenu();
+						menu.setVisible(true);	
+					}
+					
+				}
+			}
+		);
 		
 		etatFinJeu = etatFin;
 		joueurs = j;
