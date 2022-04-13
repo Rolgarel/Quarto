@@ -27,8 +27,6 @@ public class FenetreJeu extends JFrame implements ActionListener{
     JButton boutonRegles;
     JPanel panneauGlobal;
     JPanel panneauHaut;
-    JTextField choixPiece;
-    JTextField placerPiece;
     
     /* Couleurs des éléments graphiques 
      * piece a : A32A8B
@@ -202,14 +200,14 @@ public class FenetreJeu extends JFrame implements ActionListener{
 		// TextField pour choisir une pièce
 		int widthTextField = 300;
 		int heightTextField = 20;
-		choixPiece = new JTextField("Numero de la case de la piece chosie");
-		choixPiece.setBounds(0,0, widthTextField, heightTextField);
-		panneauHaut.add(choixPiece);
+		//choixPiece = new JTextField("Numero de la case de la piece chosie");
+		//choixPiece.setBounds(0,0, widthTextField, heightTextField);
+		//panneauHaut.add(choixPiece);
 		
 		// Panel pour placer une pièce
-		placerPiece = new JTextField("Numero de la case chosie");
-		placerPiece.setBounds(0,50, widthTextField, heightTextField);
-		panneauHaut.add(placerPiece);
+		//placerPiece = new JTextField("Numero de la case chosie");
+		//placerPiece.setBounds(0,50, widthTextField, heightTextField);
+		//panneauHaut.add(placerPiece);
 		
 		
         
