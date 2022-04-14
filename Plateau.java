@@ -85,7 +85,7 @@ public class Plateau {
 		while(i<grille.length && grille[i].isNull){
 			i++;
 		}
-		return (i==6)? true:false;
+		return (i==16)? true:false;
 	}
 	
 	
@@ -154,7 +154,7 @@ public class Plateau {
 			return false;
 		} // si la ligne/colonne est pleine, on check les caractéristiques des pièces
 	
-		int iGrille = 0;
+		/*int iGrille = 0;
 		
 		if(s == "l"){
 			switch(i){
@@ -214,7 +214,19 @@ public class Plateau {
 			
 		}
 		// si les deux autres pions partage la caractéristique commune: 
-		return true;
+		return true;*/
+        
+        Piece[] pieces = new Piece[4];
+        if (s == "l") {
+            for (int y = 0; y < 4; y++) {
+                pieces[y] = grille[4*i + y];
+            }
+        } else { //si s == 'c'
+            for (int y = 0; y < 4; y++) {
+                pieces[y] = grille[4*y + i];
+            }
+        }
+        return testCaracteristiques(pieces);
 		
 		
 	}
@@ -281,7 +293,7 @@ public class Plateau {
 			return false;
 		} // si la diagonale est pleine, on check les caractéristiques des pièces
 		
-		int iGrille = 0;
+		/*int iGrille = 0;
 		int increment = 0;
 		
 		iGrille = (penteCroiss)? 3:0;
@@ -325,11 +337,23 @@ public class Plateau {
 			
 		}
 		// si les deux autres pions partage la caractéristique commune: 
-		return true;
+		return true;*/
+        
+        Piece[] pieces = new Piece[4];
+        if (penteCroiss == true) {
+            for (int y =  0; y < 4; y++) {
+                pieces[y] = grille[12 - 3*y];
+            }
+        } else {
+            for (int y =  0; y < 4; y++) {
+                pieces[y] = grille[5*y];
+            }
+        }
+        return testCaracteristiques(pieces);
 		
 	}
 	
-	//new//Retourne la piece de la grille correspondant à l'indice i
+	//Retourne la piece de la grille correspondant à l'indice i
 	
 	public Piece getPieceByIndice(int indiceCase, boolean isGrille) {
 		/*
@@ -352,5 +376,41 @@ public class Plateau {
 		}
 		return b;
 	}
+    
+    /**testCaracteristiques
+     * regarde si des pieces données ont une caractéristique commune
+     * prend en paramètre une liste de pièces
+     * @return: true si une caractéristique commune est trouvée entre les pièces
+     */
+    public boolean testCaracteristiques (Piece[] pieces) {
+        boolean condition = false;
+        if (pieces[0].isNull == true) {
+            return condition;
+        }
+        boolean[] semblable = {true, true, true, true};
+        for (int i = 1; i < pieces.length; i++) {
+            if (pieces[0].isNull == true) {
+                return condition;
+            }
+            if (pieces[0].estGrand() != pieces[i].estGrand()) {
+                semblable[0]  = false;
+            }
+            if (pieces[0].estRond() != pieces[i].estRond()) {
+                semblable[1]  = false;
+            }
+            if (pieces[0].getCouleur() != pieces[i].getCouleur()) {
+                semblable[2]  = false;
+            }
+            if (pieces[0].estCreux() != pieces[i].estCreux()) {
+                semblable[3]  = false;
+            }
+        }
+        for (int i = 0; i < 4; i++) {
+            if (semblable[i] == true) {
+                condition = true;
+            }
+        }
+        return condition;
+    }
 
 }
