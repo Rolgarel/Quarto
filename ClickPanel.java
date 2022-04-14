@@ -40,8 +40,10 @@ public class ClickPanel {
 			img2 = ImageIO.read(getClass().getClassLoader().getResource(nomImg2 + ".png"));
 			combinedImg = new BufferedImage(taille, taille, BufferedImage.TYPE_INT_ARGB);
 			Graphics2D g = combinedImg.createGraphics();
+			int x = (taille-img2.getWidth())/2;
+			int y = x;
 			g.drawImage(img1, 0, 0, null);
-			g.drawImage(img2, 0, 0, null);
+			g.drawImage(img2, x, y, null);
 			g.dispose();
 			this.image = combinedImg;			
 		} catch (IOException e){
