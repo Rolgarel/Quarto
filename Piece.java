@@ -1,3 +1,8 @@
+/* STATUT :
+ * Variables toutes privées
+ */
+
+
 public class Piece {
 	
 	// Attributs
@@ -5,10 +10,9 @@ public class Piece {
 	private boolean rond;	
 	private boolean couleur; 
 	private boolean creux;
-	public boolean isNull;
-	public boolean estPlace;
-	public String codeImage;
-	public int place;
+	private boolean pieceNull;
+	private boolean enPlace;
+	private int place;
 	
 	
 	// Constructeur
@@ -17,14 +21,50 @@ public class Piece {
 		this.rond = forme;
 		this.couleur = couleur;
 		this.creux = creux;
-		this.estPlace = false;
-		this.codeImage = this.trouverImage();
+		this.enPlace = false;
 		this.place = place;
-		this.isNull =  false;
+		this.pieceNull =  false;
 	}
 	
 	public Piece(){
-		isNull = true;
+		pieceNull = true;
+	}
+	
+	// Getters
+	public boolean isNull(){
+		return this.pieceNull;
+	}
+	
+	public int getPlace(){
+		return this.place;
+	}
+	
+	public boolean estPlace(){
+		return this.enPlace;
+	}
+	
+	
+	public boolean estGrand(){
+		return grand;
+	}
+
+	public boolean estRond(){
+		return rond;
+	}
+	
+	public boolean getCouleur(){
+		return couleur;
+	}
+	
+	public boolean estCreux(){
+		return creux;
+	}
+	
+	
+	// setter
+	
+	public void setPlace(boolean estPlace){
+		this.enPlace = estPlace;
 	}
 	
 	/** toString()
@@ -45,76 +85,6 @@ public class Piece {
 
 		return name;
 	}
-	
-	
-	
-	// getters
-	
-	public boolean estGrand(){
-		return grand;
-	}
-
-	public boolean estRond(){
-		return rond;
-	}
-	
-	public boolean getCouleur(){
-		return couleur;
-	}
-	
-	public boolean estCreux(){
-		return creux;
-	}
-	
-	public boolean estPlace(){
-		return estPlace;
-	}
-	
-	// setter
-	
-	public void setPlace(boolean estPlace){
-		this.estPlace = estPlace;
-	}
-	
-	
-	
-	// Méthodes
-	private String trouverImage (){
-		String taille = "";
-		String forme = "";
-		String couleur = "";
-		String remplissage = "";
-		if (this.grand){
-			taille += "g";
-		}else{
-			taille += "p";
-		}
-		if (this.rond){
-			forme += "r";
-		}else{
-			forme += "c";
-		}
-		if (this.couleur){
-			couleur+= "a";
-		}else{
-			couleur += "b";
-		}
-		if (this.creux){
-			remplissage += "c";
-		}else{
-			remplissage += "p";
-		}
-		String code = taille + forme + couleur + remplissage +".png";
-		
-		return code;
-	}
-	
-	
-	
-	
-	
-	
-	
 	
 	
 

@@ -3,7 +3,7 @@ import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
 
-
+// STATUT : FenetreMenu finie
 
 public class FenetreMenu extends JFrame implements ActionListener{
 	
@@ -129,12 +129,11 @@ public class FenetreMenu extends JFrame implements ActionListener{
 	}
 	
 	
-	
-	
+
 	/* actionPerformed(ActionEvent e)
 	 * Réagit à l'évènement "le bouton a été enfoncé"
 	 */
-	 public void actionPerformed(ActionEvent e){
+	public void actionPerformed(ActionEvent e){
 		if(e.getSource() == bRegles){
 			FenetreRegles regles = new FenetreRegles();
 		}
@@ -146,8 +145,14 @@ public class FenetreMenu extends JFrame implements ActionListener{
 			FenetreJeu JeuOrdi = new FenetreJeu(false);
 			dispose();
 		}
-	 }
+	}
 	 
+	 
+	
+	/* Main */
+    public static void main(String[] args){
+		FenetreMenu menu = new FenetreMenu();
+	}
 	
 
 }

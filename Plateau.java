@@ -1,9 +1,13 @@
+/* STATUT :
+ * attributs tous privés
+ */
+
 public class Plateau {
 	
 	//Attributs
 	private Piece [] listePieces;
 	//Piece [][] grille;
-	Piece[] grille;
+	private Piece[] grille;
 	
 	//Constructeur
 	public Plateau(){
@@ -23,6 +27,9 @@ public class Plateau {
 		return this.listePieces;
 	}
 	
+	public Piece[] getGrille(){
+		return this.grille;
+	}
 	
 	
 	//Methodes
@@ -82,7 +89,7 @@ public class Plateau {
 	 */
 	public boolean isGrillePleine(){
 		int i = 0;
-		while(i<grille.length && grille[i].isNull){
+		while(i<grille.length && grille[i].isNull()){
 			i++;
 		}
 		return (i==16)? true:false;
@@ -120,7 +127,7 @@ public class Plateau {
 		}
 		
 		for(int j=0; j < 4 && iGrille < 16; j++){
-			if(this.grille[iGrille].isNull){
+			if(this.grille[iGrille].isNull()){
 				return false;
 			}
 			iGrille = (s=="l")? iGrille+1 : iGrille+4;
@@ -129,7 +136,21 @@ public class Plateau {
 		return true;
 	}
 	
+	//Retourne la piece de la grille correspondant à l'indice i
 	
+	public Piece getPieceByIndice(int indiceCase, boolean isGrille) {
+		/*
+		if(isGrille){
+			int y = indiceCase/4; //numero de la ligne
+			int x = indiceCase%4; //numero de la colone
+			return grille[y][x];
+		} else {
+			return listePieces[indiceCase];
+		}*/
+		return new Piece();
+		
+		
+	}
 	
 	/** ligneColonneGagnante()
 	 * @param : indice ligne ou colonne, String : c pour test sur colonnes, l pour lignes
@@ -154,68 +175,6 @@ public class Plateau {
 			return false;
 		} // si la ligne/colonne est pleine, on check les caractéristiques des pièces
 	
-		/*int iGrille = 0;
-		
-		if(s == "l"){
-			switch(i){
-				case 0 :
-					iGrille = 0;
-					break;
-				case 1 :
-					iGrille = 4;
-					break;
-				case 2 :
-					iGrille = 8;
-					break;
-				case 3 :
-					iGrille = 12;
-					break;
-			}
-		} else { // if s == "c"
-			iGrille = i;
-		}
-		
-		
-		boolean taille0 = grille[iGrille].estGrand();
-		boolean forme0 = grille[iGrille].estRond();
-		boolean color0 = grille[iGrille].getCouleur();
-		boolean remplissage0 = grille[iGrille].estCreux();
-		
-		iGrille = (s=="l")? iGrille+1 : iGrille+4;
-		
-		String commonCaract = ""; // donne le type du caractère partagé
-		boolean caract0 = false; // initialisation de la variable
-		
-		// Identification du caractère commun :
-		if(taille0 == grille[iGrille].estGrand()){
-			commonCaract = "taille";
-			caract0 = taille0;
-		} else if(forme0 == grille[iGrille].estRond()){
-			commonCaract = "forme";
-			caract0 = forme0;
-		} else if(color0 == grille[iGrille].getCouleur()){
-			commonCaract = "color";
-			caract0 = color0;
-		} else if(remplissage0 == grille[iGrille].estCreux()){
-			commonCaract = "remplissage";
-			caract0 = remplissage0;
-		} else { // aucune caractéristique commune.
-			return false;
-		}
-		
-		// Vérification du caractère commun sur les deux dernières pièces
-		iGrille = (s=="l")? iGrille+1 : iGrille+4;
-		
-		for(int j=0; j<2 && iGrille < 16; j++){
-			if(!hasSameCaract(commonCaract, caract0, grille[iGrille])){
-				return false;
-			}
-			iGrille = (s=="l")? iGrille+1 : iGrille+4;
-			
-		}
-		// si les deux autres pions partage la caractéristique commune: 
-		return true;*/
-        
         Piece[] pieces = new Piece[4];
         if (s == "l") {
             for (int y = 0; y < 4; y++) {
@@ -268,7 +227,7 @@ public class Plateau {
 		increment = (penteCroiss)? 4-1 : 4+1;
 		
 		for(int j=0; j<4 && indice < 16; j++){
-			if(this.grille[indice].isNull){
+			if(this.grille[indice].isNull()){
 				return false;
 			}
 			indice = indice + increment;
@@ -292,52 +251,6 @@ public class Plateau {
 		if(!pleine){
 			return false;
 		} // si la diagonale est pleine, on check les caractéristiques des pièces
-		
-		/*int iGrille = 0;
-		int increment = 0;
-		
-		iGrille = (penteCroiss)? 3:0;
-		increment = (penteCroiss)? 4-1 : 4+1;
-		
-		boolean taille0 = grille[iGrille].estGrand();
-		boolean forme0 = grille[iGrille].estRond();
-		boolean color0 = grille[iGrille].getCouleur();
-		boolean remplissage0 = grille[iGrille].estCreux();
-	
-		iGrille += increment;
-		
-		String commonCaract = ""; // donne le type du caractère partagé
-		boolean caract0 = false; // initialisation de la variable
-		
-		// Identification du caractère commun :
-		if(taille0 == grille[iGrille].estGrand()){
-			commonCaract = "taille";
-			caract0 = taille0;
-		} else if(forme0 == grille[iGrille].estRond()){
-			commonCaract = "forme";
-			caract0 = forme0;
-		} else if(color0 == grille[iGrille].getCouleur()){
-			commonCaract = "color";
-			caract0 = color0;
-		} else if(remplissage0 == grille[iGrille].estCreux()){
-			commonCaract = "remplissage";
-			caract0 = remplissage0;
-		} else { // aucune caractéristique commune.
-			return false;
-		}
-		
-		// Vérification du caractère commun sur les deux dernières pièces
-		iGrille += increment;
-		
-		for(int j=0; j<2 && iGrille < 16; j++){
-			if(!hasSameCaract(commonCaract, caract0, grille[iGrille])){
-				return false;
-			}
-			iGrille += increment;
-			
-		}
-		// si les deux autres pions partage la caractéristique commune: 
-		return true;*/
         
         Piece[] pieces = new Piece[4];
         if (penteCroiss == true) {
@@ -353,29 +266,7 @@ public class Plateau {
 		
 	}
 	
-	//Retourne la piece de la grille correspondant à l'indice i
 	
-	public Piece getPieceByIndice(int indiceCase, boolean isGrille) {
-		/*
-		if(isGrille){
-			int y = indiceCase/4; //numero de la ligne
-			int x = indiceCase%4; //numero de la colone
-			return grille[y][x];
-		} else {
-			return listePieces[indiceCase];
-		}*/
-		return new Piece();
-		
-		
-	}
-	
-	public boolean isOccupee (int i) {
-		boolean b = true;
-		if(getPieceByIndice(i, true) == null) {
-			b = false;
-		}
-		return b;
-	}
     
     /**testCaracteristiques
      * regarde si des pieces données ont une caractéristique commune
@@ -384,12 +275,12 @@ public class Plateau {
      */
     public boolean testCaracteristiques (Piece[] pieces) {
         boolean condition = false;
-        if (pieces[0].isNull == true) {
+        if (pieces[0].isNull() == true) {
             return condition;
         }
         boolean[] semblable = {true, true, true, true};
         for (int i = 1; i < pieces.length; i++) {
-            if (pieces[0].isNull == true) {
+            if (pieces[0].isNull() == true) {
                 return condition;
             }
             if (pieces[0].estGrand() != pieces[i].estGrand()) {

@@ -1,14 +1,14 @@
 import java.util.Arrays;
 
+// STATUT : Joueur fini
 
 public class Joueur {
 	
 	// Attributs
-	String nom;
-	Piece pieceChoisie;
-	boolean piecePlace;
-	int caseChoisie;
-	Plateau plateau;
+	private String nom;
+	private Piece pieceChoisie;
+	private int caseChoisie;
+	private Plateau plateau; // utile seuelement pour les tests ?
 	
 	//Constructeur
 	public Joueur (String unNom){
@@ -17,11 +17,33 @@ public class Joueur {
 		this.caseChoisie = -1;
 	}
 
-	
-	//Constructeur
 	public Joueur (String unNom, Plateau unPlateau){
 		nom = unNom;
 		plateau = unPlateau;
+	}
+	
+	// Getters 
+	public String getNom(){
+		return this.nom;
+	}
+	
+	public Piece getPieceChoisie(){
+		return this.pieceChoisie;
+	}
+	
+	public int getCaseChoisie(){
+		return this.caseChoisie;
+	}
+	
+	
+	
+	// Setters
+	public void setPieceChoisie(Piece piece){
+		this.pieceChoisie = piece;
+	}
+	
+	public void setCaseChoisie(int numCase){
+		this.caseChoisie = numCase;
 	}
 	
 

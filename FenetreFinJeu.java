@@ -4,12 +4,16 @@ import javax.swing.JOptionPane;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/* STATUT : 
+ * FenetreFinJeu encore en construction
+ * tout ce qui doit être privé l'est
+ */
 
 public class FenetreFinJeu  extends JFrame{
 
-	int etatFinJeu;
-	Joueur [] joueurs;
-	String s;
+	private int etatFinJeu;
+	private Joueur [] joueurs;
+	private String s;
 	
 	// Constructeur 
 	

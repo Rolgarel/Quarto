@@ -4,12 +4,16 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+/* STATUT : 
+ * tous les éléments de cette classe sont implémentés et utilisés
+ * les attributs et classes qui doivent être privés le sont
+ */
 
 public class ClickPanel {
     
-    public int positionX;
-    public int positionY;
-    public int taille;
+    private int positionX;
+    private int positionY;
+    private int taille;
     
     //Images
     Toolkit Tool = Toolkit.getDefaultToolkit();
@@ -17,12 +21,25 @@ public class ClickPanel {
     
     public boolean isSelected;
     
+    // Constructeurs 
+    
     public ClickPanel (int x, int y, int t) {
         this.positionX = x;
         this.positionY = y;
         this.taille = t;    
     }
     
+    
+    // Getters : 
+    
+    public int getPositionX(){
+		return this.positionX;
+	}
+	
+	public int getPositionY(){
+		return this.positionY;
+	}
+	
     
     // Méthodes
     

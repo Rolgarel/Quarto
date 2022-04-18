@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.Color;
 import java.awt.Font;
 
+// STATUT : FenetreRegles finie	
+
 public class FenetreRegles extends JFrame {
 	//Attributs
 	private JPanel fond;
@@ -21,6 +23,8 @@ public class FenetreRegles extends JFrame {
 	private JLabel l13;	
 	private JLabel l14;	
 	private JLabel l15;
+		
+	
 		
 	//Constructeur
 	public FenetreRegles (){

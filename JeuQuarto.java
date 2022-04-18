@@ -1,10 +1,14 @@
+
+//STATUT : JeuQuarto finie
+
+
 public class JeuQuarto {
 	
 	// Attributs du jeu :
 	
-	Plateau plateau;
-	Joueur[] joueurs;
-	int etatFinJeu = -1;
+	private Plateau plateau;
+	private Joueur[] joueurs;
+	private int etatFinJeu = -1;
 	
 	
 	
@@ -20,6 +24,20 @@ public class JeuQuarto {
 	public JeuQuarto(Plateau plateau){
 		this.plateau = plateau;
 		joueurs = initJoueurs(true);
+	}
+	
+	// Getters
+	
+	public Plateau getPlateau(){
+		return this.plateau;
+	}
+	
+	public Joueur[] getJoueurs(){
+		return this.joueurs;
+	}
+	
+	public int getEtatFinJeu(){
+		return this.etatFinJeu;
 	}
 	
 	
@@ -55,11 +73,11 @@ public class JeuQuarto {
 		int tour = etape%4;
 		
 		if( (tour == 1) && joueurs[1].estGagnant(plateau) ){
-			System.out.println(joueurs[1].nom + " a gagne : fin du jeu.");
+			System.out.println(joueurs[1].getNom()+ " a gagne : fin du jeu.");
 			etatFinJeu = 2;
 			return true;
 		} else if(tour == 3 && joueurs[0].estGagnant(plateau) ){
-			System.out.println(joueurs[0].nom + " a gagne : fin du jeu.");
+			System.out.println(joueurs[0].getNom() + " a gagne : fin du jeu.");
 			etatFinJeu = 1;
 			return true;
 		} else if(plateau.isGrillePleine()){
