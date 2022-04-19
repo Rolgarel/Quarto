@@ -131,7 +131,6 @@ public class Plateau {
 				return false;
 			}
 			iGrille = (s=="l")? iGrille+1 : iGrille+4;
-			j++;
 		}
 		return true;
 	}

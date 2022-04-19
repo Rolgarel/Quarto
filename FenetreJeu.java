@@ -211,10 +211,19 @@ public class FenetreJeu extends JFrame implements ActionListener{
 				coordClick[1] = e.getY();
 				
 				int tour = etape%4;
-				if (tour == 0 || tour == 2){
-					selectB = getClickedZone (coordClick, false);
-				}else if (tour == 1 || tour== 3){
-					selectA = getClickedZone (coordClick, true);
+				switch(tour){
+					case 0 :
+						selectB = getClickedZoneB(coordClick[0], coordClick[1]);
+						break;
+					case 1 :
+						selectA = getClickedZoneA(coordClick[0], coordClick[1]);
+						break;
+					case 2 : 
+						selectB = getClickedZoneB(coordClick[0], coordClick[1]);
+						break;
+					case 3 :
+						selectA = getClickedZoneA(coordClick[0], coordClick[1]);
+						break;
 				}
 				repaint();
 			}
@@ -325,7 +334,10 @@ public class FenetreJeu extends JFrame implements ActionListener{
 			} else {
 				affEtape.setText("La case choisie est deja occupee. Recommencez.");
 			}
+
+			
 		}
+			
 	}
 	
     
@@ -420,13 +432,23 @@ public class FenetreJeu extends JFrame implements ActionListener{
         }
     }
     
+  
 	//retourne l'indice de la zone sélectionnée si elle appartient au plateau sinon retourne -1
-	public int getClickedZone (int [] coord, boolean isA) {
+	public int getClickedZoneA (int x, int y) {
 		int res = -1;
 		for (int i = 0; i < 16; i++) {
-			if (isA && pieceA[i].isIn(coord[0],coord[1]) ){
+			if (pieceA[i].isIn(x, y)) {
 				res = i;
-			}else if(!isA && pieceB[i].isIn(coord[0],coord[1])){
+			}
+		}
+		return res;
+	}
+	
+	//retourne l'indice de la zone sélectionnée si elle appartient à la zone laterale sinon retourne -1
+	public int getClickedZoneB (int x, int y) {
+		int res = -1;
+		for (int i = 0; i < 16; i++) {
+			if (pieceB[i].isIn(x, y)) {
 				res = i;
 			}
 		}
