@@ -20,11 +20,7 @@ public class JeuQuarto {
 		joueurs = initJoueurs(isHuman);
 			
 	}
-	
-	public JeuQuarto(Plateau plateau){
-		this.plateau = plateau;
-		joueurs = initJoueurs(true);
-	}
+
 	
 	// Getters
 	

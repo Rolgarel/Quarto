@@ -211,20 +211,13 @@ public class FenetreJeu extends JFrame implements ActionListener{
 				coordClick[1] = e.getY();
 				
 				int tour = etape%4;
-				switch(tour){
-					case 0 :
-						selectB = getClickedZoneB(coordClick[0], coordClick[1]);
-						break;
-					case 1 :
-						selectA = getClickedZoneA(coordClick[0], coordClick[1]);
-						break;
-					case 2 : 
-						selectB = getClickedZoneB(coordClick[0], coordClick[1]);
-						break;
-					case 3 :
-						selectA = getClickedZoneA(coordClick[0], coordClick[1]);
-						break;
+				boolean isA = true;
+				if (tour == 0 || tour == 2){
+					selectB = getClickedZone (coordClick, !isA);
+				} else if (tour == 1 || tour== 3) {
+					selectA = getClickedZone (coordClick, isA);
 				}
+				
 				repaint();
 			}
 		});
@@ -399,62 +392,52 @@ public class FenetreJeu extends JFrame implements ActionListener{
     /* paint(Graphics g)
      * MAJ de la fenetre de jeu
      */ 
-   public void paint(Graphics g){
+	public void paint(Graphics g){
     
-    panneauHaut.repaint(); //correspond à la zone de commande
-    
-    this.requestFocusInWindow();
-    
-    if (pieceB[15] != null && wallpaper != null) {
-        
-        ImagePreparationGraphics.drawImage(wallpaper,0,tailleHaut,this);
-        
-        for (int i = 0; i < pieceA.length; i++) {
-            if (pieceA[i].image != null) {
-                ImagePreparationGraphics.drawImage(pieceA[i].image, pieceA[i].getPositionX(), pieceA[i].getPositionY(),this);
-            }
-        }
-        for (int i = 0; i < pieceB.length; i++) {
-            if (pieceB[i].image != null) {
-                ImagePreparationGraphics.drawImage(pieceB[i].image, pieceB[i].getPositionX(), pieceB[i].getPositionY(),this);
-            }
-        }
-        if (etape > -1) {
-			ImagePreparationGraphics.setColor(Color.green);
-			if (selectB > -1) {
-				ImagePreparationGraphics.drawRect( pieceB[selectB].getPositionX(), pieceB[selectB].getPositionY(), taillePiece, taillePiece);
+		panneauHaut.repaint(); //correspond à la zone de commande
+		
+		this.requestFocusInWindow();
+		
+		if (pieceB[15] != null && wallpaper != null) {
+			
+			ImagePreparationGraphics.drawImage(wallpaper,0,tailleHaut,this);
+			
+			for (int i = 0; i < pieceA.length; i++) {
+				if (pieceA[i].image != null) {
+					ImagePreparationGraphics.drawImage(pieceA[i].image, pieceA[i].getPositionX(), pieceA[i].getPositionY(),this);
+				}
 			}
-			if (selectA > -1) {
-				ImagePreparationGraphics.drawRect(pieceA[selectA].getPositionX(), pieceA[selectA].getPositionY(), taillePiece, taillePiece);
+			for (int i = 0; i < pieceB.length; i++) {
+				if (pieceB[i].image != null) {
+					ImagePreparationGraphics.drawImage(pieceB[i].image, pieceB[i].getPositionX(), pieceB[i].getPositionY(),this);
+				}
 			}
-		}
+			if (etape > -1) {
+				ImagePreparationGraphics.setColor(Color.green);
+				if (selectB > -1) {
+					ImagePreparationGraphics.drawRect( pieceB[selectB].getPositionX(), pieceB[selectB].getPositionY(), taillePiece, taillePiece);
+				}
+				if (selectA > -1) {
+					ImagePreparationGraphics.drawRect(pieceA[selectA].getPositionX(), pieceA[selectA].getPositionY(), taillePiece, taillePiece);
+				}
+			}
 			g.drawImage(ImagePreparation,2,35,this);
-        }
+		}
     }
+
     
-  
-	//retourne l'indice de la zone sélectionnée si elle appartient au plateau sinon retourne -1
-	public int getClickedZoneA (int x, int y) {
+	
+	public int getClickedZone (int [] coord, boolean isA) {
 		int res = -1;
 		for (int i = 0; i < 16; i++) {
-			if (pieceA[i].isIn(x, y)) {
+			if (isA && pieceA[i].isIn(coord[0],coord[1]) ){
+				res = i;
+			} else if(!isA && pieceB[i].isIn(coord[0],coord[1])){
 				res = i;
 			}
 		}
 		return res;
 	}
-	
-	//retourne l'indice de la zone sélectionnée si elle appartient à la zone laterale sinon retourne -1
-	public int getClickedZoneB (int x, int y) {
-		int res = -1;
-		for (int i = 0; i < 16; i++) {
-			if (pieceB[i].isIn(x, y)) {
-				res = i;
-			}
-		}
-		return res;
-	}
-	
 	
 }
     

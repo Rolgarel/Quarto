@@ -22,6 +22,8 @@ public class Plateau {
 	}
 	
 	
+	
+	
 	// Getters
 	public Piece[] getListePieces(){
 		return this.listePieces;
