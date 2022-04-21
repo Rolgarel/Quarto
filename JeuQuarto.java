@@ -1,7 +1,3 @@
-
-//STATUT : JeuQuarto finie
-
-
 public class JeuQuarto {
 	
 	// Attributs du jeu :

@@ -12,17 +12,15 @@ public class Piece {
 	private boolean creux;
 	private boolean pieceNull;
 	private boolean enPlace;
-	private int place;
 	
 	
 	// Constructeur
-	public Piece(boolean taille, boolean forme, boolean couleur, boolean creux, int place){
+	public Piece(boolean taille, boolean forme, boolean couleur, boolean creux){
 		this.grand = taille;
 		this.rond = forme;
 		this.couleur = couleur;
 		this.creux = creux;
 		this.enPlace = false;
-		this.place = place;
 		this.pieceNull =  false;
 	}
 	
@@ -35,9 +33,6 @@ public class Piece {
 		return this.pieceNull;
 	}
 	
-	public int getPlace(){
-		return this.place;
-	}
 	
 	public boolean estPlace(){
 		return this.enPlace;
@@ -63,7 +58,7 @@ public class Piece {
 	
 	// setter
 	
-	public void setPlace(boolean estPlace){
+	public void setEnPlace(boolean estPlace){
 		this.enPlace = estPlace;
 	}
 	
@@ -85,7 +80,6 @@ public class Piece {
 
 		return name;
 	}
-	
-	
+
 
 }

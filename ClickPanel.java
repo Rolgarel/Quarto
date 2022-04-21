@@ -4,10 +4,6 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-/* STATUT : 
- * tous les éléments de cette classe sont implémentés et utilisés
- * les attributs et classes qui doivent être privés le sont
- */
 
 public class ClickPanel {
     
@@ -15,18 +11,15 @@ public class ClickPanel {
     private int positionY;
     private int taille;
     
-    //Images
-    Toolkit Tool = Toolkit.getDefaultToolkit();
-    Image image;
+    private Image image;
     
-    public boolean isSelected;
     
-    // Constructeurs 
+    // Constructeurs :
     
-    public ClickPanel (int x, int y, int t) {
+    public ClickPanel (int x, int y, int taille) {
         this.positionX = x;
         this.positionY = y;
-        this.taille = t;    
+        this.taille = taille;    
     }
     
     
@@ -40,8 +33,16 @@ public class ClickPanel {
 		return this.positionY;
 	}
 	
+	public int getTaille(){
+		return this.taille;
+	}
+	
+	public Image getImage(){
+		return this.image;
+	}
+
     
-    // Méthodes
+    // Setters :
     
     /* setImage()
      * MAJ l'image du ClickPanel à partir de deux images
@@ -74,9 +75,14 @@ public class ClickPanel {
 	 * @param : String = nom de l'image PNG sans son extension
 	 */
 	public void setImage(String img){
+		Toolkit Tool = Toolkit.getDefaultToolkit();
 		this.image = Tool.getImage(img + ".png");
 	}
     
+    
+    
+    
+    // Méthodes :
     
     /* isIn
      * @param : 2 int pour les coordonnées du clic sur la fenêtre

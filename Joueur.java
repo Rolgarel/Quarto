@@ -1,28 +1,21 @@
 import java.util.Arrays;
 
-// STATUT : Joueur fini
 
 public class Joueur {
 	
-	// Attributs
+	// Attributs : 
 	private String nom;
 	private Piece pieceChoisie;
 	private int caseChoisie;
-	private Plateau plateau; // utile seuelement pour les tests ?
 	
-	//Constructeur
+	//Constructeur :
 	public Joueur (String unNom){
 		this.nom = unNom;
 		this.pieceChoisie = new Piece();
 		this.caseChoisie = -1;
 	}
 
-	public Joueur (String unNom, Plateau unPlateau){
-		nom = unNom;
-		plateau = unPlateau;
-	}
-	
-	// Getters 
+	// Getters :
 	public String getNom(){
 		return this.nom;
 	}
@@ -48,7 +41,7 @@ public class Joueur {
 	
 
 	
-	// Méthodes
+	// Méthodes :
 	
 	
 	/** estGagnant()

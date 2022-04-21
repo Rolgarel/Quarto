@@ -3,14 +3,13 @@ import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
 
-// STATUT : FenetreMenu finie
+
 
 public class FenetreMenu extends JFrame implements ActionListener{
 	
 	private JButton bRegles;
 	private JButton bHumain;
 	private JButton bOrdi;
-	private JLabel titreJeu;
 	
 	public FenetreMenu(){
 	
@@ -80,7 +79,7 @@ public class FenetreMenu extends JFrame implements ActionListener{
 		bOrdi.addActionListener(this);
 		
 
-		titreJeu = new JLabel(new ImageIcon("quarto_logo.png"));
+		JLabel titreJeu = new JLabel(new ImageIcon("quarto_logo.png"));
 		titreJeu.setSize(titreJeuWidth, titreJeuHeight);
 		titreJeu.setLocation(titreJeuX, titreJeuY);
 		
@@ -146,13 +145,5 @@ public class FenetreMenu extends JFrame implements ActionListener{
 			dispose();
 		}
 	}
-	 
-	 
-	
-	/* Main */
-    public static void main(String[] args){
-		FenetreMenu menu = new FenetreMenu();
-	}
-	
 
 }

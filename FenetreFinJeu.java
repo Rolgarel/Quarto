@@ -9,10 +9,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.nio.charset.StandardCharsets;
 
-/* STATUT : 
- * FenetreFinJeu encore en construction
- * tout ce qui doit être privé l'est
- */
 
 public class FenetreFinJeu extends JFrame {
 
@@ -100,14 +96,5 @@ public class FenetreFinJeu extends JFrame {
 		setVisible(true);
 	}
 	
-	/* Main
-	 * A exécuter pour tester la fenêtre de fin de jeu
-	 */
-	public static void main(String[] args){
-		Joueur[] joueurs = new Joueur[2];
-		joueurs[0] = new Joueur("Joueur 1");
-		joueurs[1] = new Joueur("Joueur 2");
-		FenetreFinJeu gameOver = new FenetreFinJeu(2, joueurs);
-	}
-
+	
 }

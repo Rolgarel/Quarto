@@ -46,35 +46,35 @@ public class Plateau {
 		
 		// Pieces grandes et rondes 
 			// creuses
-		pieces[0] = new Piece(true, true, true, true, 0);
-		pieces[1] = new Piece(true, true, false, true, 1);
+		pieces[0] = new Piece(true, true, true, true);
+		pieces[1] = new Piece(true, true, false, true);
 			// pleines
-		pieces[2] = new Piece(true, true, true, false, 2);
-		pieces[3] = new Piece(true, true, false, false, 3);
+		pieces[2] = new Piece(true, true, true, false);
+		pieces[3] = new Piece(true, true, false, false);
 		
 		// Pieces grandes et carrées
 			// creuses
-		pieces[4] = new Piece(true, false, true, true, 4);
-		pieces[5] = new Piece(true, false, false, true, 5);
+		pieces[4] = new Piece(true, false, true, true);
+		pieces[5] = new Piece(true, false, false, true);
 			//pleines
-		pieces[6] = new Piece(true, false, true, false, 6);
-		pieces[7] = new Piece(true, false, false, false, 7);
+		pieces[6] = new Piece(true, false, true, false);
+		pieces[7] = new Piece(true, false, false, false);
 		
 		// Pieces petites et rondes
 			// creuses
-		pieces[8] = new Piece(false, true, true, true, 8);
-		pieces[9] = new Piece(false, true, false, true, 9);
+		pieces[8] = new Piece(false, true, true, true);
+		pieces[9] = new Piece(false, true, false, true);
 			// pleines
-		pieces[10] = new Piece(false, true, true, false, 10);
-		pieces[11] = new Piece(false, true, false, false, 11);
+		pieces[10] = new Piece(false, true, true, false);
+		pieces[11] = new Piece(false, true, false, false);
 		
 		// Pieces petites et carrées
 			// creuses
-		pieces[12] = new Piece(false, false, true, true, 12);
-		pieces[13] = new Piece(false, false, false, true, 13);
+		pieces[12] = new Piece(false, false, true, true);
+		pieces[13] = new Piece(false, false, false, true);
 			// pleines
-		pieces[14] = new Piece(false, false, true, false, 14);
-		pieces[15] = new Piece(false, false, false, false, 15);
+		pieces[14] = new Piece(false, false, true, false);
+		pieces[15] = new Piece(false, false, false, false);
 
 
 		return pieces;
@@ -304,5 +304,21 @@ public class Plateau {
         }
         return condition;
     }
+    
+    /* indexOf()
+     * @param : une instance de Piece = piece
+     * @return : int = index de piece dans la listePieces du plateau
+     */
+    public int indexOf(Piece piece){
+		int index = -1;
+		int indice = 0;
+		
+		while(piece.toString()!=this.listePieces[indice].toString() && indice<this.listePieces.length){
+			indice++;
+		}
+		index = indice;
+		
+		return index;
+	}
 
 }
