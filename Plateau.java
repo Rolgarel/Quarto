@@ -90,11 +90,13 @@ public class Plateau {
 	 * @return : boolean = true si pleine, false sinon
 	 */
 	public boolean isGrillePleine(){
-		int i = 0;
-		while(i<grille.length && grille[i].isNull()){
-			i++;
-		}
-		return (i==16)? true:false;
+		boolean res = true;
+        for (int i = 0; i < grille.length; i++) {
+            if (grille[i].isNull() == true) {
+                res = false;
+            }
+        }
+        return res;
 	}
 	
 	
@@ -169,9 +171,9 @@ public class Plateau {
 		} else { // si s = "c"
 			pleine = isLigneColonnePleine(i, "c");
 		}
-		String result = "";
-		result = (s=="l")? "la ligne":"la colonne";
-		System.out.println(result + " " + i + " est pleine : " + pleine);
+		//String result = "";
+		//result = (s=="l")? "la ligne":"la colonne";
+		//System.out.println(result + " " + i + " est pleine : " + pleine);
 		if(!pleine){
 			return false;
 		} // si la ligne/colonne est pleine, on check les caractéristiques des pièces
