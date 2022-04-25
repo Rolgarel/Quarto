@@ -4,10 +4,6 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-/* STATUT : 
- * tous les éléments de cette classe sont implémentés et utilisés
- * les attributs et classes qui doivent être privés le sont
- */
 
 public class ClickPanel {
     
@@ -15,18 +11,15 @@ public class ClickPanel {
     private int positionY;
     private int taille;
     
-    //Images
-    Toolkit Tool = Toolkit.getDefaultToolkit();
-    Image image;
+    private Image image;
     
-    public boolean isSelected;
     
-    // Constructeurs 
+    // Constructeurs :
     
-    public ClickPanel (int x, int y, int t) {
+    public ClickPanel (int x, int y, int taille) {
         this.positionX = x;
         this.positionY = y;
-        this.taille = t;    
+        this.taille = taille;    
     }
     
     
@@ -40,8 +33,16 @@ public class ClickPanel {
 		return this.positionY;
 	}
 	
+	public int getTaille(){
+		return this.taille;
+	}
+	
+	public Image getImage(){
+		return this.image;
+	}
+
     
-    // Méthodes
+    // Setters :
     
     /* setImage()
      * MAJ l'image du ClickPanel à partir de deux images
@@ -53,8 +54,8 @@ public class ClickPanel {
         BufferedImage img2;
         BufferedImage combinedImg;
         try{
-			img1 = ImageIO.read(getClass().getClassLoader().getResource(nomImg1 + ".png"));
-			img2 = ImageIO.read(getClass().getClassLoader().getResource(nomImg2 + ".png"));
+			img1 = ImageIO.read(getClass().getClassLoader().getResource("img_fond/"+ nomImg1 + ".png"));
+			img2 = ImageIO.read(getClass().getClassLoader().getResource("img_pieces/"+ nomImg2 + ".png"));
 			combinedImg = new BufferedImage(taille, taille, BufferedImage.TYPE_INT_ARGB);
 			Graphics2D g = combinedImg.createGraphics();
 			int x = (taille-img2.getWidth())/2;
@@ -68,15 +69,22 @@ public class ClickPanel {
 		}
 	}
 	
+	
+	
 	/* setImage()
 	 * MAJ l'image du ClickPanel à partir d'une image
 	 * (en l'occurence, un fond)
 	 * @param : String = nom de l'image PNG sans son extension
 	 */
 	public void setImage(String img){
-		this.image = Tool.getImage(img + ".png");
+		Toolkit Tool = Toolkit.getDefaultToolkit();
+		this.image = Tool.getImage("img_fond/"+ img + ".png");
 	}
     
+    
+    
+    
+    // Méthodes :
     
     /* isIn
      * @param : 2 int pour les coordonnées du clic sur la fenêtre

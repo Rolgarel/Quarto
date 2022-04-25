@@ -1,7 +1,3 @@
-
-//STATUT : JeuQuarto finie
-
-
 public class JeuQuarto {
 	
 	// Attributs du jeu :
@@ -36,6 +32,10 @@ public class JeuQuarto {
 		return this.etatFinJeu;
 	}
 	
+	// Setter
+	public void setPlateau(Plateau unPlateau){
+		this.plateau = unPlateau;
+	}
 	
 	
 	// Méthodes
