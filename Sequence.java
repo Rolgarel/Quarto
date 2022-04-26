@@ -5,7 +5,7 @@ public class Sequence {
     private boolean plein; //true si la séquence est complète, false sinon
     private boolean[] caracteristiquesDisponibles; //liste des disponiblilités des caractéristiques dans l'odre donné dans Piece, true si disponible, false sinon
     private boolean sequencePossible; //true si une victoire est possible sur cette ligne, false sinon
-    private int espaceDisponible; //nombre de pièces manquantes dans la séquence
+    private int nombreEspacesDisponibles; //nombre de pièces manquantes dans la séquence
     private int premierePiece; //indice de la première pièce de la séquence
     
     //Constructeur
@@ -19,8 +19,8 @@ public class Sequence {
         return this.plein;
     }
     
-    public int getEspaceDisponible() {
-        return this.espaceDisponible;
+    public int getNombreEspacesDisponibles() {
+        return this.nombreEspacesDisponibles;
     }
     
     public boolean[] getCaracteristiquesDisponibles() {
@@ -47,11 +47,16 @@ public class Sequence {
     //Methodes
     
     /**update()
-     * met à jour les variables de l'objet
+     * met à jour les variables de l'objet :
+     * 	1) nombreEspacesDisponibles
+     * 	2) plein
+     * 	3) premierePiece
+     * 	4) caracteristiquesDisponibles
+     * 	5) sequencePossible
      */
     private void update() {
-        espaceDisponible = rechercheEspace();
-        if (espaceDisponible == 0) {
+        nombreEspacesDisponibles = rechercheEspace();
+        if (nombreEspacesDisponibles == 0) {
             plein = true;
         } else {
             plein = false;
@@ -61,7 +66,7 @@ public class Sequence {
             boolean[] b = {false, false, false, false};
             caracteristiquesDisponibles = b;
             sequencePossible = false;
-        } else if (espaceDisponible == sequence.length || espaceDisponible == (sequence.length - 1)) {
+        } else if (nombreEspacesDisponibles == sequence.length || nombreEspacesDisponibles == (sequence.length - 1)) {
             premierePiece = -1;
             boolean[] b = {true, true, true, true};
             sequencePossible = true;
@@ -100,8 +105,10 @@ public class Sequence {
         int res = 100;
         for (int i = 0; i < this.sequence.length; i++) {
             if ((this.sequence[i].isNull() == false) && (i < res)) {
+                System.out.println("Dans le if");
                 res = i;
             }
+            System.out.println("res = " + res);
         }
         return res;
     }
@@ -191,7 +198,7 @@ public class Sequence {
      * @param: Piece p, une pièce donnée
      */
     public void add(Piece piece) {
-        if (this.espaceDisponible > 0) {
+        if (this.nombreEspacesDisponibles > 0) {
             boolean elementPlace = false;
             for (int i = 0; i < sequence.length; i++) {
                 if ((elementPlace == false) && (sequence[i].isNull() == true)) {

@@ -167,11 +167,12 @@ public class BotAI {
         boolean res = false;
         Piece piece = currentState.getListePieces()[pieceDonnee];
         int[] c = correspondance(indice);
-        if ((c[0] != -1) && (sL[c[0]].getSequencePossible() == true) && (sL[c[0]].getEspaceDisponible() == 1) && (sL[c[0]].estCompatible(piece))) {
+        if ((c[0] != -1) && (sL[c[0]].getSequencePossible() == true) && (sL[c[0]].getNombreEspacesDisponibles() == 1) && (sL[c[0]].estCompatible(piece))) {
+            // 
             res = true;
-        } else if ((c[1] != -1) && (sC[c[1]].getSequencePossible() == true) && (sC[c[1]].getEspaceDisponible() == 1) && (sC[c[1]].estCompatible(piece))) {
+        } else if ((c[1] != -1) && (sC[c[1]].getSequencePossible() == true) && (sC[c[1]].getNombreEspacesDisponibles() == 1) && (sC[c[1]].estCompatible(piece))) {
             res = true;
-        } else if ((c[2] != -1) && (sD[c[2]].getSequencePossible() == true) && (sD[c[2]].getEspaceDisponible() == 1) && (sD[c[2]].estCompatible(piece))) {
+        } else if ((c[2] != -1) && (sD[c[2]].getSequencePossible() == true) && (sD[c[2]].getNombreEspacesDisponibles() == 1) && (sD[c[2]].estCompatible(piece))) {
             res = true;
         }
         return res;
@@ -187,11 +188,11 @@ public class BotAI {
         boolean res = false;
         Piece piece = currentState.getListePieces()[indicePiece];
         int[] c = correspondance(indice);
-        if ((c[0] != -1) && (sL[c[0]].getSequencePossible() == true) && (sL[c[0]].getEspaceDisponible() == 1) && (sL[c[0]].estCompatible(piece))) {
+        if ((c[0] != -1) && (sL[c[0]].getSequencePossible() == true) && (sL[c[0]].getNombreEspacesDisponibles() == 1) && (sL[c[0]].estCompatible(piece))) {
             res = true;
-        } else if ((c[1] != -1) && (sC[c[1]].getSequencePossible() == true) && (sC[c[1]].getEspaceDisponible() == 1) && (sC[c[1]].estCompatible(piece))) {
+        } else if ((c[1] != -1) && (sC[c[1]].getSequencePossible() == true) && (sC[c[1]].getNombreEspacesDisponibles() == 1) && (sC[c[1]].estCompatible(piece))) {
             res = true;
-        } else if ((c[2] != -1) && (sD[c[2]].getSequencePossible() == true) && (sD[c[2]].getEspaceDisponible() == 1) && (sD[c[2]].estCompatible(piece))) {
+        } else if ((c[2] != -1) && (sD[c[2]].getSequencePossible() == true) && (sD[c[2]].getNombreEspacesDisponibles() == 1) && (sD[c[2]].estCompatible(piece))) {
             res = true;
         }
         return res;
