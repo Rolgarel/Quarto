@@ -7,12 +7,21 @@ public class Joueur {
 	private String nom;
 	private Piece pieceChoisie;
 	private int caseChoisie;
+    private boolean isBot;
 	
-	//Constructeur :
+	//Constructeurs :
 	public Joueur (String unNom){
 		this.nom = unNom;
 		this.pieceChoisie = new Piece();
 		this.caseChoisie = -1;
+        this.isBot = false;
+	}
+    
+    public Joueur (String unNom, boolean bot){
+		this.nom = unNom;
+		this.pieceChoisie = new Piece();
+		this.caseChoisie = -1;
+        this.isBot = bot;
 	}
 
 	// Getters :
@@ -27,6 +36,10 @@ public class Joueur {
 	public int getCaseChoisie(){
 		return this.caseChoisie;
 	}
+    
+    public boolean getIsBot() {
+        return this.isBot;
+    }
 	
 	
 	

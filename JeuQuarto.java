@@ -53,7 +53,7 @@ public class JeuQuarto {
 		if(isHuman){
 			joueurs[1] = new Joueur("Joueur 2");
 		} else {
-			joueurs[1] = new Joueur("Ordi");
+            joueurs[1] = new Joueur("Ordi", true);
 		}
 		
 		return joueurs;

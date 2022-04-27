@@ -25,15 +25,20 @@ public class FenetreJeu extends JFrame implements ActionListener {
     private BufferedImage ImagePreparation;
     private Graphics ImagePreparationGraphics;
     
+    private FenetreFinJeu finJeu;
+    
     
     // Variables de jeu
     private JeuQuarto jeu;
     private int etape = -1;
+    private boolean tourBot = false;
     private ClickPanel[] pieceA = new ClickPanel[16]; // pieces plateau
     private ClickPanel[] pieceB = new ClickPanel[16]; // pieces zone de selection laterale
     private int[] coordClick = new int[2];
     private int selectA = -1;
     private int selectB = -1;
+    private int choixBotA = -1;
+    private int choixBotB = -1;
     
     
 	
@@ -89,33 +94,24 @@ public class FenetreJeu extends JFrame implements ActionListener {
 				
 				public void windowClosing(WindowEvent e){
 					
-					int result = JOptionPane.showConfirmDialog(null, "Etes-vous sur de vouloir quitter le jeu ?", "Pause", JOptionPane.OK_CANCEL_OPTION);
+                    if (finJeu != null) {
+                        finJeu.dispatchEvent(new WindowEvent(finJeu, WindowEvent.WINDOW_CLOSING));
+                        
+                    } else {
+                    
+                        int result = JOptionPane.showConfirmDialog(null, "Etes-vous sur de vouloir quitter le jeu ?", "Pause", JOptionPane.OK_CANCEL_OPTION);
 					
-					if(result == JOptionPane.YES_OPTION){
-						//System.out.println("You pressed Yes");
-						setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-						FenetreMenu menu = new FenetreMenu();
-						menu.setVisible(true);
+                        if(result == JOptionPane.YES_OPTION){
+                            setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+                            FenetreMenu menu = new FenetreMenu();
+                            menu.setVisible(true);
 						
-					} else { // bouton Cancel
-						//System.out.println("You pressed Cancel");
-						int etapeCourant = etape;
-						ClickPanel[] pieceACourant = pieceA;
-						ClickPanel[] pieceBCourant = pieceB;
-						JeuQuarto jeuCourant = jeu;
-						
-						FenetreJeu fenetreJeu = new FenetreJeu(isHuman);
-						fenetreJeu.setVisible(true);
-						
-						fenetreJeu.etape = etapeCourant;
-						fenetreJeu.updateEtape();
-						fenetreJeu.pieceA = pieceACourant;
-						fenetreJeu.pieceB = pieceBCourant;
-						fenetreJeu.jeu = jeuCourant;
-						//System.out.println(fenetreJeu.etape);
-					}
+                        } else { // bouton Cancel
+                            setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+                        }
 					
-				}
+                    }
+                }
 			}
 		);
 		
@@ -223,15 +219,15 @@ public class FenetreJeu extends JFrame implements ActionListener {
 			@Override // MAJ de l'étape après appui sur le bouton confirmer
 			public void mousePressed(MouseEvent e) {
 					
-				System.out.println(e.getX() + "," + e.getY());
+				//System.out.println(e.getX() + "," + e.getY());
 				coordClick[0] = e.getX();
 				coordClick[1] = e.getY();
 				
 				int tour = etape%4;
 				boolean isA = true;
-				if (tour == 0 || tour == 2){
+				if ((tourBot == false) && (tour == 0 || tour == 2)){
 					selectB = getClickedZone (coordClick, !isA);
-				} else if (tour == 1 || tour== 3) {
+				} else if ((tourBot == false) && (tour == 1 || tour== 3)) {
 					selectA = getClickedZone (coordClick, isA);
 				}
 				
@@ -265,8 +261,10 @@ public class FenetreJeu extends JFrame implements ActionListener {
 			FenetreRegles regles = new FenetreRegles();
             
         } else if (e.getSource() == this.boutonConfirmer) {
-			System.out.println("confirmer : etape " + this.etape);
-			if(this.etape == -1) {
+			//System.out.println("confirmer : etape " + this.etape);
+            if (this.etape == -10) {
+                finJeu = new FenetreFinJeu(jeu.getEtatFinJeu(), jeu.getJoueurs(), this);
+            } else if(this.etape == -1) {
 				this.setEtape(this.etape + 1);
 			} else {
 				this.repaint();  // MAJ de l'affichage
@@ -283,17 +281,20 @@ public class FenetreJeu extends JFrame implements ActionListener {
 	 */
 	public void deroulementTour(int etape){
 		
-		int tour = etape%4;	
-		//
+		int tour = etape%4;
+        
 		if(tour == 0 || tour == 2){  // alors l'action = un choix de pièce
 	
 			int indiceJoueur = (tour==0)? 0 : 1;
 			int casePieceChoisie = this.selectB;
-			Piece pieceChoisie = jeu.getPlateau().getListePieces()[casePieceChoisie];
+            Piece pieceChoisie = new Piece();
+            if (casePieceChoisie != -1) {
+                pieceChoisie = jeu.getPlateau().getListePieces()[casePieceChoisie];
+            }
 			jeu.getJoueurs()[indiceJoueur].setPieceChoisie(pieceChoisie);
 			
 			if((jeu.getJoueurs()[indiceJoueur].getPieceChoisie().isNull() || jeu.getJoueurs()[indiceJoueur].getPieceChoisie().estPlace())){
-				affEtape.setText("Vous n'avez pas choisi de piece ou la piece est deja placee. Recommencez.");
+				affEtape.setText("Vous n'avez pas choisi de pièce ou la pièce est deja placée. Recommencez.");
 			} else {
 				try{
 					File imgFile = new File("img_pieces/" + pieceChoisie.toString() + ".png");
@@ -308,30 +309,33 @@ public class FenetreJeu extends JFrame implements ActionListener {
 			
 		} else { // alors l'action = un placement de pièce
 			int indiceJoueurChoix = (tour==1)? 0 : 1;
-			int numCase = selectA;
+			int numCase = this.selectA;
 			System.out.print("numCase = " + numCase);
-			if(jeu.getPlateau().getGrille()[numCase].isNull()){
-				placerPiece(jeu.getJoueurs()[indiceJoueurChoix].getPieceChoisie(), numCase, indiceJoueurChoix);
-				try{
-					File imgFile = new File("img_fond/caseVide.png");
-					BufferedImage bufferedImage = ImageIO.read(imgFile);
-					ImageIcon imageIcon = new ImageIcon(bufferedImage);
-					affPieceChosie.setIcon(imageIcon);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				if(jeu.isOver(etape)){
-					System.out.println("Etat fin de jeu : " + jeu.getEtatFinJeu());
-					FenetreFinJeu finJeu = new FenetreFinJeu(jeu.getEtatFinJeu(), jeu.getJoueurs());
-				} else {
-					setEtape(this.etape + 1);
-				}
+            if (numCase != -1) {
+                if(jeu.getPlateau().getGrille()[numCase].isNull()){
+                    placerPiece(jeu.getJoueurs()[indiceJoueurChoix].getPieceChoisie(), numCase, indiceJoueurChoix);
+                    try{
+                        File imgFile = new File("img_fond/caseVide.png");
+                        BufferedImage bufferedImage = ImageIO.read(imgFile);
+                        ImageIcon imageIcon = new ImageIcon(bufferedImage);
+                        affPieceChosie.setIcon(imageIcon);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    if(jeu.isOver(etape)){
+                        System.out.println("Etat fin de jeu : " + jeu.getEtatFinJeu());
+                        setEtape(-10);
+                        finJeu = new FenetreFinJeu(jeu.getEtatFinJeu(), jeu.getJoueurs(), this);
+                    } else {
+                        setEtape(this.etape + 1);
+                    }
 				
-			} else {
-				affEtape.setText("La case choisie est deja occupee. Recommencez.");
-			}
-
-			
+                } else {
+                    affEtape.setText("La case choisie est deja occupée. Recommencez.");
+                }
+            } else {   
+                affEtape.setText("Aucune case n'est sélectionnée. Recommencez.");
+            }
 		}
 			
 	}
@@ -372,29 +376,72 @@ public class FenetreJeu extends JFrame implements ActionListener {
      */
     public void updateEtape() {
 		
-        String s = " Instruction : ";
-        if (etape < 0) {
-            s = "La partie va commencer  : appuyez sur le bouton Confirmer";
-        } else if ((etape%4) == 0) {
-            s = s + "Veuillez sélectionner une piece pour le " + jeu.getJoueurs()[1].getNom();
-            affTourJoueur.setText("Tour : " + jeu.getJoueurs()[0].getNom());
-            selectA = -1;
-            selectB = -1;
-        } else if ((etape%4) == 1) {
-            s = s + "Veuillez positionner la piece";
-            affTourJoueur.setText("Tour : " + jeu.getJoueurs()[1].getNom());
-        } else if ((etape%4) == 2) {
-            s = s + "Veuillez sélectionner une piece pour le " + jeu.getJoueurs()[0].getNom();
-            affTourJoueur.setText("Tour : " + jeu.getJoueurs()[1].getNom());
-            selectA = -1;
-            selectB = -1;
-        } else if ((etape%4) == 3) {
-            s = s + "Veuillez positionner la piece";
-            affTourJoueur.setText("Tour : " + jeu.getJoueurs()[0].getNom());
+        if (etape == -10) {
+            affEtape.setText("Partie terminée");
+        } else {
+            String s = " Instruction : ";
+            if (etape < 0) {
+                s = "La partie va commencer  : appuyez sur le bouton Confirmer";
+            } else {
+                int tour = etape%4;
+                //System.out.println(tour);
+                if ((tour == 0) || (tour == 3)) {
+                    tourBot = jeu.getJoueurs()[0].getIsBot();
+                } else {
+                    tourBot = jeu.getJoueurs()[1].getIsBot();
+                }
+                if ((etape%4) == 0) {
+                    if (tourBot == false) {
+                        s = s + "Veuillez sélectionner une piece pour le " + jeu.getJoueurs()[1].getNom();
+                        affTourJoueur.setText("Tour : " + jeu.getJoueurs()[0].getNom());
+                        selectA = -1;
+                        selectB = -1;
+                    } else {
+                        if (etape == 0) {
+                            choixBotB = pieceAleatoire();
+                        }
+                        s = "Veuillez appuyer sur le bouton Confirmer";
+                        affTourJoueur.setText("Tour : " + jeu.getJoueurs()[0].getNom());
+                        selectA = -1;
+                        selectB = choixBotB;
+                    }
+                } else if ((etape%4) == 1) {
+                    if (tourBot == false) {
+                        s = "Veuillez positionner la piece";
+                        affTourJoueur.setText("Tour : " + jeu.getJoueurs()[1].getNom());
+                    } else {
+                        choixIA(selectB);
+                        s = s + "Veuillez appuyer sur le bouton Confirmer";
+                        affTourJoueur.setText("Tour : " + jeu.getJoueurs()[1].getNom());
+                        selectA = choixBotA;
+                    }
+                } else if ((etape%4) == 2) {
+                    if (tourBot == false) {
+                        s = s + "Veuillez sélectionner une piece pour le " + jeu.getJoueurs()[0].getNom();
+                        affTourJoueur.setText("Tour : " + jeu.getJoueurs()[1].getNom());
+                        selectA = -1;
+                        selectB = -1;
+                    } else {
+                        s = s + "Veuillez appuyer sur le bouton Confirmer";
+                        affTourJoueur.setText("Tour : " + jeu.getJoueurs()[1].getNom());
+                        selectA = -1;
+                        selectB = choixBotB;
+                    }
+                } else if ((etape%4) == 3) {
+                    if (tourBot == false) {
+                        s = s + "Veuillez positionner la piece";
+                        affTourJoueur.setText("Tour : " + jeu.getJoueurs()[0].getNom());
+                    } else {
+                        choixIA(selectB);
+                        s = s + "Veuillez appuyer sur le bouton Confirmer";
+                        affTourJoueur.setText("Tour : " + jeu.getJoueurs()[0].getNom());
+                        selectA = choixBotA;
+                    }
+                }
+            }
+            s = Main.encodeUTF8(s);
+            affEtape.setText(s);
         }
-        s = Main.encodeUTF8(s);
-        affEtape.setText(s);
-        
     }
     
     /* paint(Graphics g)
@@ -439,7 +486,12 @@ public class FenetreJeu extends JFrame implements ActionListener {
     }
 
     
-	
+	/**getClickedZone()
+     * Recherche si le joueur à cliqué sur un clickPanel dans une des deux zones possibles
+     * @param: int [] coord, les coordonées du click dans la fenêtre
+     *         boolean isA, true si la zone est la A
+     * @return: int res, l'indice du clickPanel dans lequel le joueur à clické, -1 sinon
+     */
 	public int getClickedZone (int [] coord, boolean isA) {
 		int res = -1;
 		for (int i = 0; i < 16; i++) {
@@ -451,6 +503,25 @@ public class FenetreJeu extends JFrame implements ActionListener {
 		}
 		return res;
 	}
+    
+    /**choixIA()
+     * Recherche des solutions avec l'IA pour une pièce donnée
+     * @param: int indicePiece, indice de la pièce donnée à l'IA
+     */
+    public void choixIA (int indicePiece) {
+        Plateau plateau = jeu.getPlateau();
+        BotAI ia = new BotAI(plateau, indicePiece);
+        choixBotA = ia.getPositionSolution();
+        choixBotB = ia.getIndicePieceSolution();
+    }
+    
+    /**choixIA()
+     * Donne l'indice d'une pièce aléatoire
+     */
+    public int pieceAleatoire () {
+        int indicePiece = (int)(16*Math.random());
+        return indicePiece;
+    }
 	
 }
     

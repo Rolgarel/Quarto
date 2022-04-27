@@ -105,10 +105,10 @@ public class Sequence {
         int res = 100;
         for (int i = 0; i < this.sequence.length; i++) {
             if ((this.sequence[i].isNull() == false) && (i < res)) {
-                System.out.println("Dans le if");
+                //System.out.println("Dans le if");
                 res = i;
             }
-            System.out.println("res = " + res);
+            //System.out.println("res = " + res);
         }
         return res;
     }

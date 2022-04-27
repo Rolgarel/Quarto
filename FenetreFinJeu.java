@@ -15,12 +15,15 @@ public class FenetreFinJeu extends JFrame {
 	private int etatFinJeu;
 	private Joueur [] joueurs;
 	private String s;
+    private FenetreJeu fenetreJeu;
 	
 	
 	// Constructeur 
 	
-	public FenetreFinJeu (int etatFin , Joueur[] j){
+	public FenetreFinJeu (int etatFin , Joueur[] j, FenetreJeu fJ){
 		super ("Fin de la partie");
+        
+        this.fenetreJeu = fJ;
 		
 		// Variables dimensions
 		int mainHeight = 500;
@@ -47,12 +50,15 @@ public class FenetreFinJeu extends JFrame {
 					int result = JOptionPane.showConfirmDialog(null, "Vous allez revenir au menu", "Information", JOptionPane.OK_CANCEL_OPTION);
 					
 					if(result == JOptionPane.OK_OPTION){
-						System.out.println("You pressed OK");
-						setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+						//System.out.println("You pressed OK");
+						setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+                        fenetreJeu.dispose();
 						FenetreMenu menu = new FenetreMenu();
 						menu.setVisible(true);	
-					}
-					
+					} else {
+                        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+                        fenetreJeu.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+                    }
 				}
 			}
 		);
