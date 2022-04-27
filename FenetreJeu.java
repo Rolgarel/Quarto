@@ -154,7 +154,7 @@ public class FenetreJeu extends JFrame implements ActionListener {
         JPanel panneauEtape = new JPanel();
 		panneauEtape.setBounds(15,tailleHaut -50 -10,600,30);
 		panneauEtape.setLayout(null);
-		panneauEtape.setBackground(Color.pink); //couleur de font du text
+		panneauEtape.setBackground(Color.black); //couleur de font du text
         
         affEtape = new JLabel();
         affEtape.setFont(new Font("Dialog", Font.BOLD, 20));

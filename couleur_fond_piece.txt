@@ -1,0 +1,6 @@
+couleur a : FF0368
+couleur b : FFDE08
+couleur fond : 002C59
+couleur plateau : DAE8FC
+
+couleur case du plateau fond | bordure : A8B2C2 |7296C9
