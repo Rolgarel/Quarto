@@ -58,7 +58,7 @@ public class BotAI {
         ArrayList<Piece> res = new ArrayList<Piece>();
         Piece[] liste = currentState.getListePieces();
         for (int i = 0; i < liste.length; i++) {
-            if(liste[i].estPlace() == false) {
+            if((liste[i].estPlace() == false) && (i != pieceDonnee)) {
                 res.add(liste[i]);
             }
         }
