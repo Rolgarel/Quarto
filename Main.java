@@ -3,9 +3,9 @@ import java.nio.charset.StandardCharsets;
 public class Main {
 	
 	public static void main(String[] args){
-		//FenetreMenu menu = new FenetreMenu();
+		FenetreMenu menu = new FenetreMenu();
 		//FenetreRegles regles = new FenetreRegles();
-		FenetreJeu jeu = new FenetreJeu(true);
+		//FenetreJeu jeu = new FenetreJeu(true);
 		
 		/*
 		Joueur[] joueurs = new Joueur[2];
