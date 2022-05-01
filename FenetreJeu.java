@@ -158,7 +158,7 @@ public class FenetreJeu extends JFrame implements ActionListener {
         
         affEtape = new JLabel();
         affEtape.setFont(new Font("Dialog", Font.BOLD, 20));
-		affEtape.setBounds(0,0,600,20);
+		affEtape.setBounds(0,0,600,30);
 		affEtape.setForeground(Color.white);
 		updateEtape();
 		panneauEtape.add(affEtape);
@@ -294,7 +294,7 @@ public class FenetreJeu extends JFrame implements ActionListener {
 			jeu.getJoueurs()[indiceJoueur].setPieceChoisie(pieceChoisie);
 			
 			if((jeu.getJoueurs()[indiceJoueur].getPieceChoisie().isNull() || jeu.getJoueurs()[indiceJoueur].getPieceChoisie().estPlace())){
-				affEtape.setText("Vous n'avez pas choisi de pièce ou la pièce est deja placée. Recommencez.");
+				affEtape.setText(Main.encodeUTF8("Pas de pièce choisie ou pièce déjà placée. Recommencez."));
 			} else {
 				try{
 					File imgFile = new File("img_pieces/" + pieceChoisie.toString() + ".png");
@@ -331,10 +331,10 @@ public class FenetreJeu extends JFrame implements ActionListener {
                     }
 				
                 } else {
-                    affEtape.setText("La case choisie est deja occupée. Recommencez.");
+                    affEtape.setText(Main.encodeUTF8("La case choisie est deja occupée. Recommencez."));
                 }
             } else {   
-                affEtape.setText("Aucune case n'est sélectionnée. Recommencez.");
+                affEtape.setText(Main.encodeUTF8("Aucune case n'est sélectionnée. Recommencez."));
             }
 		}
 			
@@ -377,7 +377,7 @@ public class FenetreJeu extends JFrame implements ActionListener {
     public void updateEtape() {
 		
         if (etape == -10) {
-            affEtape.setText("Partie terminée");
+            affEtape.setText(Main.encodeUTF8("Partie terminée"));
         } else {
             String s = " Instruction : ";
             if (etape < 0) {
