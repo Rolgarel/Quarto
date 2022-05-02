@@ -56,7 +56,7 @@ public class FenetreFinJeu extends JFrame {
 						FenetreMenu menu = new FenetreMenu();
 						menu.setVisible(true);	
 					} else {
-                        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+                        setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
                         fenetreJeu.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
                     }
 				}

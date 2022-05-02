@@ -263,7 +263,11 @@ public class FenetreJeu extends JFrame implements ActionListener {
         } else if (e.getSource() == this.boutonConfirmer) {
 			//System.out.println("confirmer : etape " + this.etape);
             if (this.etape == -10) {
-                finJeu = new FenetreFinJeu(jeu.getEtatFinJeu(), jeu.getJoueurs(), this);
+                if (finJeu == null) {
+                    finJeu = new FenetreFinJeu(jeu.getEtatFinJeu(), jeu.getJoueurs(), this);
+                } else {
+                    finJeu.setVisible(true);
+                }
             } else if(this.etape == -1) {
 				this.setEtape(this.etape + 1);
 			} else {
