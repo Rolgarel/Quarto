@@ -73,8 +73,8 @@ public class FenetreJeu extends JFrame implements ActionListener {
 		 * wallpaper = case B : D1BCE0
 		 * case A : 94859E
 		 */
-		
-		
+		 
+		 
 		/* Création fenêtre de jeu */
 		
 		// general parameters
@@ -119,8 +119,6 @@ public class FenetreJeu extends JFrame implements ActionListener {
         ImagePreparationGraphics = ImagePreparation.getGraphics();
         
         
-        
-       
 		/* Panneaux et leurs composants*/
 		
 		//Zone de pieces plateau
@@ -219,7 +217,6 @@ public class FenetreJeu extends JFrame implements ActionListener {
 			@Override // MAJ de l'étape après appui sur le bouton confirmer
 			public void mousePressed(MouseEvent e) {
 					
-				//System.out.println(e.getX() + "," + e.getY());
 				coordClick[0] = e.getX();
 				coordClick[1] = e.getY();
 				
@@ -249,25 +246,20 @@ public class FenetreJeu extends JFrame implements ActionListener {
 	
 	// Méthodes :
 	
-	/* actionPerformed(ActionEvent e)
+	/** actionPerformed
 	 * permet de gérer les évènements de clIC sur les boutons "Confiemer" et "Règles"
 	 * si "Règles" appuyé, affichage des règles dans une fenêtre extérieure
 	 * si "Confirmer" appuyé, fin de l'étape du jeu en cours et lancement de la suivante
+	 * @param e action de cliquer sur un bouton
 	 */
 	public void actionPerformed(ActionEvent e){
         
         if (e.getSource() == this.boutonRegles) {
-            //System.out.println("règles");
 			FenetreRegles regles = new FenetreRegles();
             
         } else if (e.getSource() == this.boutonConfirmer) {
-			//System.out.println("confirmer : etape " + this.etape);
             if (this.etape == -10) {
-                if (finJeu == null) {
-                    finJeu = new FenetreFinJeu(jeu.getEtatFinJeu(), jeu.getJoueurs(), this);
-                } else {
-                    finJeu.setVisible(true);
-                }
+                finJeu = new FenetreFinJeu(jeu.getEtatFinJeu(), jeu.getJoueurs(), this);
             } else if(this.etape == -1) {
 				this.setEtape(this.etape + 1);
 			} else {
@@ -279,9 +271,9 @@ public class FenetreJeu extends JFrame implements ActionListener {
         
     }
 
-	/* deroulementTour(int etape)
+	/**deroulementTour
 	 * gère l'action du joueur et vérifie l'état du jeu
-	 * @param : int etape = numéro de l'étape en cours
+	 * @param : etape, numéro de l'étape en cours
 	 */
 	public void deroulementTour(int etape){
 		
@@ -289,7 +281,7 @@ public class FenetreJeu extends JFrame implements ActionListener {
         
 		if(tour == 0 || tour == 2){  // alors l'action = un choix de pièce
 	
-			int indiceJoueur = (tour==0)? 0 : 1;
+			int indiceJoueur = (tour==0)? 0 : 1; //indice du joueur qui choisit la pièce
 			int casePieceChoisie = this.selectB;
             Piece pieceChoisie = new Piece();
             if (casePieceChoisie != -1) {
@@ -312,9 +304,8 @@ public class FenetreJeu extends JFrame implements ActionListener {
 			}
 			
 		} else { // alors l'action = un placement de pièce
-			int indiceJoueurChoix = (tour==1)? 0 : 1;
+			int indiceJoueurChoix = (tour==1)? 0 : 1; //indice du joueur qui avait choisit la pièce
 			int numCase = this.selectA;
-			System.out.print("numCase = " + numCase);
             if (numCase != -1) {
                 if(jeu.getPlateau().getGrille()[numCase].isNull()){
                     placerPiece(jeu.getJoueurs()[indiceJoueurChoix].getPieceChoisie(), numCase, indiceJoueurChoix);
@@ -327,7 +318,6 @@ public class FenetreJeu extends JFrame implements ActionListener {
                         e.printStackTrace();
                     }
                     if(jeu.isOver(etape)){
-                        System.out.println("Etat fin de jeu : " + jeu.getEtatFinJeu());
                         setEtape(-10);
                         finJeu = new FenetreFinJeu(jeu.getEtatFinJeu(), jeu.getJoueurs(), this);
                     } else {
@@ -345,20 +335,19 @@ public class FenetreJeu extends JFrame implements ActionListener {
 	}
 	
     
-    /* placerPiece()
+    /** placerPiece
      * Place une pièce dans la grille du plateau : 
      * MAJ de la grille et de la piece dans la liste de pieces
-     * @param : 
-     * 		piece = Piece choisie par le joueur précédent
-     * 		numCase = int numéro de la case choisie par le joueur
-     * 		numJoueur = int indice du joueur précedent
+     * @param piece, pièce choisie par le joueur précédent
+     * @param numCase, numéro de la case choisie par le joueur
+     * @param numJoueur, indice du joueur précedent
      */ 
     public void placerPiece(Piece piece, int numCase, int numJoueur){
 		
 		this.jeu.getPlateau().getGrille()[numCase] = piece;
-		this.jeu.getJoueurs()[(numJoueur==0)? 1 : 0].setCaseChoisie(-1);
+		this.jeu.getJoueurs()[(numJoueur==0)? 1 : 0].setCaseChoisie(-1); //on prend l'indice du joueur qui place
 		piece.setPlace(true);
-		this.jeu.getJoueurs()[numJoueur].setPieceChoisie(new Piece());
+		this.jeu.getJoueurs()[numJoueur].setPieceChoisie(new Piece()); // on prend l'indice du joueur qui avait choisit
 		
 		this.pieceA[numCase].setImage("fondClickPanelA", piece.toString());
 		this.pieceB[piece.getPlace()].setImage("fondCLickPanelB");
@@ -367,28 +356,28 @@ public class FenetreJeu extends JFrame implements ActionListener {
 	
     
     
-    /* setEtape(int e)
+    /** setEtape
      * MAJ de l'étape
+     * @param e 
      */ 
     public void setEtape(int e) {
         this.etape = e;
         this.updateEtape();
     }
     
-    /* uptageEtape()
+    /** updateEtape
      * MAJ de l'affichage de l'étape courante du jeu
      */
     public void updateEtape() {
 		
-        if (etape == -10) {
+        if (etape == -10) {   //Partie finie
             affEtape.setText(Main.encodeUTF8("Partie terminée"));
         } else {
             String s = " Instruction : ";
-            if (etape < 0) {
+            if (etape < 0) { //Partie non commencée
                 s = "La partie va commencer  : appuyez sur le bouton Confirmer";
-            } else {
+            } else {		// Partie commencée
                 int tour = etape%4;
-                //System.out.println(tour);
                 if ((tour == 0) || (tour == 3)) {
                     tourBot = jeu.getJoueurs()[0].getIsBot();
                 } else {
@@ -396,7 +385,7 @@ public class FenetreJeu extends JFrame implements ActionListener {
                 }
                 if ((etape%4) == 0) {
                     if (tourBot == false) {
-                        s = s + "Veuillez sélectionner une piece pour le " + jeu.getJoueurs()[1].getNom();
+                        s = s + "Veuillez sélectionner une piece pour " + jeu.getJoueurs()[1].getNom();
                         affTourJoueur.setText("Tour : " + jeu.getJoueurs()[0].getNom());
                         selectA = -1;
                         selectB = -1;
@@ -448,8 +437,9 @@ public class FenetreJeu extends JFrame implements ActionListener {
         }
     }
     
-    /* paint(Graphics g)
+    /** paint
      * MAJ de la fenetre de jeu
+     * @param g
      */ 
 	public void paint(Graphics g){
     
@@ -490,11 +480,11 @@ public class FenetreJeu extends JFrame implements ActionListener {
     }
 
     
-	/**getClickedZone()
-     * Recherche si le joueur à cliqué sur un clickPanel dans une des deux zones possibles
-     * @param: int [] coord, les coordonées du click dans la fenêtre
-     *         boolean isA, true si la zone est la A
-     * @return: int res, l'indice du clickPanel dans lequel le joueur à clické, -1 sinon
+	/**getClickedZone
+     * Recherche si le joueur a cliqué sur un clickPanel dans une des deux zones possibles
+     * @param coord, les coordonées du click dans la fenêtre
+     * @param isA, true si la zone est la A
+     * @return res, l'indice du clickPanel dans lequel le joueur a clické, -1 sinon
      */
 	public int getClickedZone (int [] coord, boolean isA) {
 		int res = -1;
@@ -508,9 +498,9 @@ public class FenetreJeu extends JFrame implements ActionListener {
 		return res;
 	}
     
-    /**choixIA()
+    /**choixIA
      * Recherche des solutions avec l'IA pour une pièce donnée
-     * @param: int indicePiece, indice de la pièce donnée à l'IA
+     * @param indicePiece, indice de la pièce donnée à l'IA
      */
     public void choixIA (int indicePiece) {
         Plateau plateau = jeu.getPlateau();
@@ -519,8 +509,9 @@ public class FenetreJeu extends JFrame implements ActionListener {
         choixBotB = ia.getIndicePieceSolution();
     }
     
-    /**choixIA()
+    /**pieceAleatoire
      * Donne l'indice d'une pièce aléatoire
+     * @return indicePiece l'indice de la case de la grille
      */
     public int pieceAleatoire () {
         int indicePiece = (int)(16*Math.random());

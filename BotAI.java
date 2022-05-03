@@ -93,7 +93,6 @@ public class BotAI {
                 s[j] = grille[j + 4*i];
             }
             res[i] = new Sequence(s);
-            //System.out.println(res[i]);
         }
         
         return res;
@@ -112,7 +111,6 @@ public class BotAI {
                 s[j] = grille[i + 4*j];
             }
             res[i] = new Sequence(s);
-            //System.out.println(res[i]);
         }
         
         return res;
@@ -130,13 +128,11 @@ public class BotAI {
             s[i] = grille[5*i];
         }
         res[0] = new Sequence(s);
-        //System.out.println(res[0]);
         s = new Piece[4];
         for (int i = 0; i < 4; i++) {
             s[i] = grille[12 - 3*i];
         }
         res[1] = new Sequence(s);
-        //System.out.println(res[1]);
         return res;
     }
     
@@ -168,7 +164,6 @@ public class BotAI {
         Piece piece = currentState.getListePieces()[pieceDonnee];
         int[] c = correspondance(indice);
         if ((c[0] != -1) && (sL[c[0]].getSequencePossible() == true) && (sL[c[0]].getNombreEspacesDisponibles() == 1) && (sL[c[0]].estCompatible(piece))) {
-            // 
             res = true;
         } else if ((c[1] != -1) && (sC[c[1]].getSequencePossible() == true) && (sC[c[1]].getNombreEspacesDisponibles() == 1) && (sC[c[1]].estCompatible(piece))) {
             res = true;
@@ -340,14 +335,11 @@ public class BotAI {
         ArrayList<Integer> coupGagnant = rechercheCoupGangant();
         if (coupGagnant.isEmpty() == false) {
             res[0] = coupGagnant.get(randomSelect(coupGagnant.size()));
-            //System.out.println("coup gagnant trouvé : " + res[0]);
         } else {
             ArrayList<Integer> coupsFavorables = recherchePositionsFavorables();
             if (coupsFavorables.isEmpty() == false) {
-                //System.out.println("coup favorable trouvé");
                 ArrayList<Integer> coupsOptimaux = recherchePositionsOptimales(coupsFavorables);
                 if (coupsOptimaux.isEmpty() == false) {
-                    //System.out.println("coup optimal trouvé");
                     res[0] = coupsOptimaux.get(randomSelect(coupsOptimaux.size()));
                 } else {
                     res[0] = coupsFavorables.get(randomSelect(coupsFavorables.size()));

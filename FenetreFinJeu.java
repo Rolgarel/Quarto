@@ -38,7 +38,7 @@ public class FenetreFinJeu extends JFrame {
 		
 		
 		
-		/* Close opetation :
+		/* Close operation :
 		 * Une fenêtre popup s'ouvre pour confirmer l'arrêt du jeu.
 		 * ATTENTION : vérifier que le bouton cancel reprend la partie qui était en cours
 		 */
@@ -50,13 +50,12 @@ public class FenetreFinJeu extends JFrame {
 					int result = JOptionPane.showConfirmDialog(null, "Vous allez revenir au menu", "Information", JOptionPane.OK_CANCEL_OPTION);
 					
 					if(result == JOptionPane.OK_OPTION){
-						//System.out.println("You pressed OK");
 						setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
                         fenetreJeu.dispose();
 						FenetreMenu menu = new FenetreMenu();
 						menu.setVisible(true);	
 					} else {
-                        setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+                        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
                         fenetreJeu.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
                     }
 				}

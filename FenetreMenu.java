@@ -129,8 +129,9 @@ public class FenetreMenu extends JFrame implements ActionListener{
 	
 	
 
-	/* actionPerformed(ActionEvent e)
+	/** actionPerformed
 	 * Réagit à l'évènement "le bouton a été enfoncé"
+	 * @param e action de cliquer sur un bouton
 	 */
 	public void actionPerformed(ActionEvent e){
 		if(e.getSource() == bRegles){

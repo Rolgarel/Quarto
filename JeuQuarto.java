@@ -14,7 +14,7 @@ public class JeuQuarto {
 	
 		plateau = new Plateau();  // les pièces sont créés avec le plateau
 		joueurs = initJoueurs(isHuman);
-			
+		
 	}
 
 	
@@ -40,18 +40,18 @@ public class JeuQuarto {
 	
 	// Méthodes
 	
-	/** initJoueur()
+	/** initJoueurs
 	 * Initialise les joueurs
-	 * @param : boolean isHumain : true si Humain VS Human, false si contre ordi
-	 * @return : tableau Joueur[2]
+	 * @param isHumain true si Humain VS Human, false si contre ordi
+	 * @return joueurs un tableau de 2 Joueur
 	 */
 	private Joueur[] initJoueurs(boolean isHuman){
 		
 		joueurs = new Joueur[2];
-		joueurs[0] = new Joueur("Joueur 1");
+		joueurs[0] = new Joueur("Joueur 1",false);
 		
 		if(isHuman){
-			joueurs[1] = new Joueur("Joueur 2");
+			joueurs[1] = new Joueur("Joueur 2",false);
 		} else {
             joueurs[1] = new Joueur("Ordi", true);
 		}
@@ -60,28 +60,25 @@ public class JeuQuarto {
 	} 
 	
 
-	/** isOver(int etape)
+	/** isOver
 	 * permet de détecter la fin de la partie
-	 * @return : booléen = true si fin de partie, false sinon
+	 * @param etape
+	 * @return true si fin de partie, false sinon
 	 */ 
 	public boolean isOver(int etape){
 
 		int tour = etape%4;
 		
 		if( (tour == 1) && joueurs[1].estGagnant(plateau) ){
-			System.out.println(joueurs[1].getNom()+ " a gagne : fin du jeu.");
 			etatFinJeu = 2;
 			return true;
 		} else if(tour == 3 && joueurs[0].estGagnant(plateau) ){
-			System.out.println(joueurs[0].getNom() + " a gagne : fin du jeu.");
 			etatFinJeu = 1;
 			return true;
 		} else if(plateau.isGrillePleine()){
-			System.out.println("Egalité : le plateau est plein");
 			etatFinJeu = 0;
 			return true;
 		} else {
-			System.out.println("Le jeu continue.");
 			return false;
 		}
 

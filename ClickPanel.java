@@ -44,7 +44,7 @@ public class ClickPanel {
     
     // Setters :
     
-    /* setImage()
+    /** setImage
      * MAJ l'image du ClickPanel à partir de deux images
      * (en l'occurence, un fond et une pièce)
      * @param : 2 String = nom des images PNG sans leur extension
@@ -69,9 +69,7 @@ public class ClickPanel {
 		}
 	}
 	
-	
-	
-	/* setImage()
+	/** setImage
 	 * MAJ l'image du ClickPanel à partir d'une image
 	 * (en l'occurence, un fond)
 	 * @param : String = nom de l'image PNG sans son extension
@@ -81,14 +79,11 @@ public class ClickPanel {
 		this.image = Tool.getImage("img_fond/"+ img + ".png");
 	}
     
-    
-    
-    
     // Méthodes :
     
-    /* isIn
+    /** isIn
      * @param : 2 int pour les coordonnées du clic sur la fenêtre
-     * @return : boolean : true si dans le ClickPanel, false sinon
+     * @return r, true si dans le ClickPanel, false sinon
      */ 
     public boolean isIn (int x, int y) {
         boolean r = false;

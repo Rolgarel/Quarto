@@ -5,8 +5,7 @@
 public class Plateau {
 	
 	//Attributs
-	private Piece [] listePieces;
-	//Piece [][] grille;
+	private Piece[] listePieces;
 	private Piece[] grille;
 	
 	//Constructeur
@@ -22,8 +21,6 @@ public class Plateau {
 	}
 	
 	
-	
-	
 	// Getters
 	public Piece[] getListePieces(){
 		return this.listePieces;
@@ -36,9 +33,9 @@ public class Plateau {
 	
 	//Methodes
 	
-	/** initPieces()
-	 * crée les pièces du jeu
-	 * @return : un tableau de pièces 
+	/** initPieces
+	 * créer les pièces du jeu
+	 * @return pieces, un tableau constitué de toutes les pièces 
 	 */
 	public Piece[] initPieces(){
 		
@@ -80,14 +77,9 @@ public class Plateau {
 		return pieces;
 	}
 	
-	
-	
-	// Méthodes
-	
-	
-	/** isGrillePleine()
+	/** isGrillePleine
 	 * check si la grille du plateau est pleine
-	 * @return : boolean = true si pleine, false sinon
+	 * @return res, true si pleine, false sinon
 	 */
 	public boolean isGrillePleine(){
 		boolean res = true;
@@ -100,12 +92,11 @@ public class Plateau {
 	}
 	
 	
-	/* isLigneColonnePleine()
-	 * Vérifie sur une ligne ou une colonne est pleine
-	 * @param : 
-	 * 		int i, indice de la ligne ou de la colonne
-	 * 		String s, "l" si l'indice correspond à une ligne, "c" pour une colonne
-	 * @return : true si la ligne/colonne i est pleine, false sinon
+	/** isLigneColonnePleine
+	 * Vérifie si une ligne ou une colonne est pleine
+	 * @param  i, indice de la ligne ou de la colonne
+	 * @param s, "l" si l'indice correspond à une ligne, "c" pour une colonne
+	 * @return true si la ligne/colonne i est pleine, false sinon
 	 */
 	public boolean isLigneColonnePleine(int i, String s){
 		
@@ -139,24 +130,9 @@ public class Plateau {
 		return true;
 	}
 	
-	//Retourne la piece de la grille correspondant à l'indice i
-	
-	public Piece getPieceByIndice(int indiceCase, boolean isGrille) {
-		/*
-		if(isGrille){
-			int y = indiceCase/4; //numero de la ligne
-			int x = indiceCase%4; //numero de la colone
-			return grille[y][x];
-		} else {
-			return listePieces[indiceCase];
-		}*/
-		return new Piece();
-		
-		
-	}
-	
-	/** ligneColonneGagnante()
-	 * @param : indice ligne ou colonne, String : c pour test sur colonnes, l pour lignes
+	/** ligneColonneGagnante
+	 * @param i, indice ligne ou colonne
+	 * @param s, c pour test sur colonnes, l pour lignes
 	 * @return : true si ligne ou colonne gagnante, false sinon
 	 */
 	public boolean ligneColonneGagnante(int i, String s){
@@ -171,9 +147,7 @@ public class Plateau {
 		} else { // si s = "c"
 			pleine = isLigneColonnePleine(i, "c");
 		}
-		//String result = "";
-		//result = (s=="l")? "la ligne":"la colonne";
-		//System.out.println(result + " " + i + " est pleine : " + pleine);
+		
 		if(!pleine){
 			return false;
 		} // si la ligne/colonne est pleine, on check les caractéristiques des pièces
@@ -194,13 +168,12 @@ public class Plateau {
 	}
 	
 	
-	/* hasSameCaract()
+	/** hasSameCaract
 	 * Compare les caractéristiques qui pourrait être commune entre une pièce et une pièce de référence
-	 * @param : 
-	 * 		String typeCaract : nature de la caractéristique commune
-	 * 		boolean ref : valeur de la caractéristique de réf
-	 * 		Piece piece : pièce qui fait l'objet de la comparaison avec la référence
-	 * @retrun : ture si la caractéristique commune est partagée, non sinon
+	 * @param typeCaract, caractéristique à tester
+	 * @param ref, valeur de la caractéristique que l'on veut tester
+	 * @param piece, pièce qui fait l'objet de la comparaison avec la référence
+	 * @retrun true si la caractéristique commune est partagée, false sinon
 	 */
 	public boolean hasSameCaract(String typeCaract, boolean ref, Piece piece){
 		if(typeCaract == "taille"){
@@ -217,8 +190,9 @@ public class Plateau {
 	}
 	
 	/** isDiagonalePleine
-	 * prend en param penteCroiss true pour la diag : / , et false pour la diag : \
-	 * @return : true si pleine, false sinon
+	 * vérifie si une diagonale est pleine
+	 * @param penteCroiss, true pour la diagonale /, et false pour la diagonale \
+	 * @return true si pleine, false sinon
 	 */
 	
 	public boolean isDiagonalePleine (boolean penteCroiss){
@@ -241,16 +215,14 @@ public class Plateau {
 	
 	/**alignementGagnantD
 	 * regarde si une diagonale est gagnante
-	 * prend en param penteCroiss true pour la diag : / , et false pour la diag : \
-	 * @return : true si gagnant, false sinon
+	 * @param penteCroiss, true pour la diag : / , et false pour la diag : \
+	 * @return  true si gagnant, false sinon
 	 */ 
 	 
 	public boolean alignementGagnantD (boolean penteCroiss){
 		
 		boolean pleine = isDiagonalePleine(penteCroiss);
-		//String result = "";
-		//result = (penteCroiss)? "l'horizontale":"la verticale";
-		//System.out.println(result + " est pleine : " + pleine);
+		
 		if(!pleine){
 			return false;
 		} // si la diagonale est pleine, on check les caractéristiques des pièces
@@ -271,10 +243,10 @@ public class Plateau {
 	
 	
     
-    /**testCaracteristiques
+    /** testCaracteristiques
      * regarde si des pieces données ont une caractéristique commune
-     * prend en paramètre une liste de pièces
-     * @return: true si une caractéristique commune est trouvée entre les pièces
+     * @param pieces, une liste de pièces
+     * @return condition, true si une caractéristique commune est trouvée entre les pièces
      */
     public boolean testCaracteristiques (Piece[] pieces) {
         boolean condition = false;

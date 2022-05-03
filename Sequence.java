@@ -105,10 +105,8 @@ public class Sequence {
         int res = 100;
         for (int i = 0; i < this.sequence.length; i++) {
             if ((this.sequence[i].isNull() == false) && (i < res)) {
-                //System.out.println("Dans le if");
                 res = i;
             }
-            //System.out.println("res = " + res);
         }
         return res;
     }
@@ -177,7 +175,7 @@ public class Sequence {
 	 * le nom = 4 lettres qui donnent ses caractéristiques :
 	 * 1ere lettre : g = grand, p = petit
 	 * 2eme lettre : r = rond, c = carré
-	 * 3eme lettre : a = (vert), b = (bleu)
+	 * 3eme lettre : a = rose, b = jaune
 	 * 4eme lettre : c = creux, p = plein
      * si la pièce est une pièce nulle alors son nom est xxxx
 	 */

@@ -67,13 +67,14 @@ public class Piece {
 		this.enPlace = estPlace;
 	}
 	
-	/** toString()
+	/** toString
 	 * donne le nom de la pièce
 	 * le nom = 4 lettres qui donnent ses caractéristiques :
 	 * 1ere lettre : g = grand, p = petit
 	 * 2eme lettre : r = rond, c = carré
-	 * 3eme lettre : a = (vert), b = (bleu)
+	 * 3eme lettre : a = rose, b = jaune
 	 * 4eme lettre : c = creux, p = plein
+	 * @return name le nom de la pièce
 	 */
 	public String toString(){
 		
